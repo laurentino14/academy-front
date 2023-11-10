@@ -26,7 +26,7 @@ export default function ExercisePage() {
   };
 
   return (
-    <main className="min-h-screen w-full flex items-center justify-center">
+    <div className="min-h-screen w-full flex items-center justify-center">
       <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5">
         <h1 className="text-white text-2xl font-medium">
           Cadastro de Exercício
@@ -54,6 +54,6 @@ export default function ExercisePage() {
           </form>
         </FormProvider>
       </div>
-    </main>
+    </div>
   );
 }

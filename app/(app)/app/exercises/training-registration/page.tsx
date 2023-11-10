@@ -1,69 +1,59 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
-import { AuthContext } from "@/contexts/auth";
-import { useContext } from "react";
+import { env } from "@/utils/env";
+import cookies from "js-cookie";
 import { FormProvider, useForm } from "react-hook-form";
-type IForm = {
-  id: string;
-  name?: string;
-  email?: string;
-  password?: string;
-  birthdate?: string;
-  gender?: string;
+type ExerciseForm = {
+  name: string;
+  description: string;
 };
-export default function Page() {
-  const { user } = useContext(AuthContext);
-  const methods = useForm<IForm>({
-    defaultValues: {
-      id: user?.id,
-      name: user?.name,
-      email: user?.email,
-      gender: undefined,
-      birthdate: undefined,
-      password: undefined,
-    },
-  });
 
-  const submit = async (data: IForm) => {
+export default function ExercisePage() {
+  const methods = useForm<ExerciseForm>();
 
-  }
+  const submitExercise = async (data: ExerciseForm) => {
+    console.log(data);
+    const token = cookies.get("at");
+    await fetch(env.api + "/exercise", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+  };
 
   return (
-    <main className="min-h-screen w-full flex items-center justify-center">
-      <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
-        <h1 className="text-white text-2xl font-medium">Editar perfil</h1>
+    <div className="min-h-screen w-full flex items-center justify-center">
+      <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5">
+        <h1 className="text-white text-2xl font-medium">
+          Cadastro de Exercício
+        </h1>
         <FormProvider {...methods}>
-          <form onSubmit={methods.} className="flex w-full space-y-4 mt-10 flex-col">
-            <div className="space-x-4 w-full">
-              <InputForm
-                className="w-full"
-                defaultValue={user?.name}
-                name="name"
-                placeholder="Nome"
-                type="text"
-              />
-            </div>
+          <form
+            onSubmit={methods.handleSubmit(submitExercise)}
+            className="flex w-full space-y-4 mt-10 flex-col"
+          >
             <InputForm
-              defaultValue={user?.email}
-              name="email"
-              placeholder="E-mail"
-              type="email"
+              className="w-full"
+              name="name"
+              placeholder="Nome"
+              type="text"
             />
-            <div className="space-x-4 flex flex-row flex-nowrap">
-              <InputForm
-                className="w-full"
-                name="password"
-                placeholder="Senha"
-                type="password"
-              />
-            </div>
+            <InputForm
+              className="w-full"
+              name="description"
+              placeholder="Descrição"
+              type="text"
+            />
             <Button intent="primary" type="submit">
-              Alterar informações
+              Cadastrar Exercício
             </Button>
           </form>
         </FormProvider>
       </div>
-    </main>
+    </div>
   );
 }
