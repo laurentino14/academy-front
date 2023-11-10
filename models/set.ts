@@ -1,21 +1,21 @@
 export abstract class Set {
-  id: string;
-  reps: number;
-  weight?: number;
-  day: Day;
-  createdAt: Date;
-  updatedAt: Date;
-  exerciseId: any;
-  workoutId: any;
-  Workout?: any;
-  Exercise?: any;
+  abstract id: string;
+  abstract reps: number;
+  abstract weight?: number;
+  abstract day: Day;
+  abstract createdAt: Date;
+  abstract updatedAt: Date;
+  abstract exerciseId: any;
+  abstract workoutId: any;
+  abstract Workout?: any;
+  abstract Exercise?: any;
 }
 
 export type Day =
-  | 'MONDAY'
-  | 'TUESDAY'
-  | 'WEDNESDAY'
-  | 'THURSDAY'
-  | 'FRIDAY'
-  | 'SATURDAY'
-  | 'SUNDAY';
+  | "MONDAY"
+  | "TUESDAY"
+  | "WEDNESDAY"
+  | "THURSDAY"
+  | "FRIDAY"
+  | "SATURDAY"
+  | "SUNDAY";

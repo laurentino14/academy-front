@@ -1,7 +1,7 @@
-import { User } from './user';
+import { User } from "./user";
 
-export class Auth {
-  user: User;
-  accessToken: string;
-  refreshToken?: string;
+export abstract class Auth {
+  abstract user: User;
+  abstract accessToken: string;
+  abstract refreshToken?: string;
 }

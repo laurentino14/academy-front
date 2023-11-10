@@ -1,15 +1,15 @@
-import { Set } from './set';
-import { User } from './user';
+import { Set } from "./set";
+import { User } from "./user";
 
-export class Workout {
-  id: string;
-  active: boolean;
-  name: string;
-  sets?: Set[];
-  User?: User;
-  userId: string;
-  Instructor?: User;
-  instructorId: string;
-  createdAt: Date;
-  updatedAt: Date;
+export abstract class Workout {
+  abstract id: string;
+  abstract active: boolean;
+  abstract name: string;
+  abstract sets?: Set[];
+  abstract User?: User;
+  abstract userId: string;
+  abstract Instructor?: User;
+  abstract instructorId: string;
+  abstract createdAt: Date;
+  abstract updatedAt: Date;
 }
