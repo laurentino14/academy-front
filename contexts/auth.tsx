@@ -82,6 +82,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   async function signOut() {
     setUser(undefined);
     cookies.remove("rt");

@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { AuthContext } from "@/contexts/auth";
 import { env } from "@/utils/env";
+import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 type IForm = {
   id: string;
@@ -49,44 +51,118 @@ export default function Page() {
       .then((res) => setUser(res.data));
   };
 
+  const [active, setActive] = useState(1);
+
   return (
-    <main className="min-h-screen w-full flex items-center justify-center">
+    <div className="min-h-screen w-full flex items-center justify-center">
       <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
-        <h1 className="text-white text-2xl font-medium">Editar perfil</h1>
-        <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(submit)}
-            className="flex w-full space-y-4 mt-10 flex-col"
+        <div className="w-full flex flex-nowrap">
+          <Button
+            onClick={() => setActive(1)}
+            className={clsx("  rounded-r-none w-full", {
+              "!bg-gray1 text-white/80": active === 2,
+            })}
           >
-            <div className="space-x-4 w-full">
-              <InputForm
-                className="w-full"
-                placeholder={user?.name}
-                name="name"
-                type="text"
-              />
-            </div>
-            <InputForm placeholder={user?.email} name="email" type="email" />
-            <div className="space-x-4 flex flex-row flex-nowrap">
-              <InputForm
-                className="w-full"
-                name="password"
-                placeholder="Senha"
-                type="password"
-              />
-            </div>
-            <h2 className="text-sm text-primary w-full space-x-2">
-              <sup className="animate-pulse">*</sup>
-              <span className="text-primary font-medium">
-                Digite somente os campos que deseja alterar!
-              </span>
-            </h2>
-            <Button intent="primary" type="submit">
-              Alterar informações
-            </Button>
-          </form>
-        </FormProvider>
+            Editar perfil
+          </Button>
+          <Button
+            onClick={() => setActive(2)}
+            className={clsx("  rounded-l-none w-full", {
+              "!bg-gray1 text-white/80": active === 1,
+            })}
+          >
+            Alterar senha
+          </Button>
+        </div>
+        <motion.div
+          animate={{ height: "auto" }}
+          layoutRoot
+          className="w-full  relative overflow-hidden"
+        >
+          <AnimatePresence mode="wait" initial={false} presenceAffectsLayout>
+            <FormProvider {...methods}>
+              <motion.form
+                animate={{
+                  translateX: active === 1 ? 0 : "-100%",
+                  opacity: active === 1 ? 1 : 0,
+                  position: active === 1 ? "relative" : "absolute",
+                  top: 0,
+                }}
+                transition={{ duration: 0.5, display: { position: 0.5 } }}
+                onSubmit={methods.handleSubmit(submit)}
+                className="flex  w-full space-y-4 mt-10 flex-col"
+              >
+                <div className="space-x-4 w-full">
+                  <InputForm
+                    className="w-full"
+                    placeholder={user?.name}
+                    name="name"
+                    type="text"
+                  />
+                </div>
+                <InputForm
+                  placeholder={user?.email}
+                  name="email"
+                  type="email"
+                />
+                <div className="space-x-4 flex flex-row flex-nowrap">
+                  <InputForm
+                    className="w-full"
+                    name="password"
+                    placeholder="Senha"
+                    type="password"
+                  />
+                </div>
+
+                <Button intent="primary" type="submit">
+                  Alterar informações
+                </Button>
+              </motion.form>
+            </FormProvider>
+            <FormProvider {...methods}>
+              <motion.form
+                animate={{
+                  translateX: active === 2 ? 0 : "100%",
+                  opacity: active === 2 ? 1 : 0,
+                  position: active === 2 ? "relative" : "absolute",
+                }}
+                transition={{ duration: 0.5, display: { position: 0.5 } }}
+                onSubmit={methods.handleSubmit(submit)}
+                className="flex w-full space-y-4 mt-10 flex-col"
+              >
+                <div className="space-x-4 flex flex-row flex-nowrap">
+                  <InputForm
+                    className="w-full"
+                    name="oldPassword"
+                    placeholder="Senha atual"
+                    type="password"
+                  />
+                </div>
+                <div className="space-x-4 flex flex-row flex-nowrap">
+                  <InputForm
+                    className="w-full"
+                    name="password"
+                    placeholder="Nova senha"
+                    type="password"
+                  />
+                </div>
+                <div className="space-x-4 flex flex-row flex-nowrap">
+                  <InputForm
+                    className="w-full"
+                    name="confirmPassword"
+                    placeholder="Confirme a nova senha"
+                    type="password"
+                  />
+                </div>
+
+                <Button intent="primary" type="submit">
+                  Alterar informações
+                </Button>
+              </motion.form>
+            </FormProvider>
+          </AnimatePresence>
+        </motion.div>
       </div>
-    </main>
+    </div>
   );
 }

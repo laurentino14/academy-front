@@ -1,12 +1,16 @@
+import { History } from "./history";
+import { Set } from "./set";
 import { Workout } from "./workout";
 
 export type User = {
+  sets: Set[];
   id: string;
   role: Role;
   doc: string;
   gender: string;
   name: string;
   email: string;
+  history: History[];
   birthdate: string;
   password: string;
   createdAt: Date | string;

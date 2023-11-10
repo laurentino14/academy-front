@@ -6,9 +6,9 @@ export abstract class Workout {
   abstract active: boolean;
   abstract name: string;
   abstract sets?: Set[];
-  abstract User?: User;
+  abstract user?: User;
   abstract userId: string;
-  abstract Instructor?: User;
+  abstract instructor?: User;
   abstract instructorId: string;
   abstract createdAt: Date;
   abstract updatedAt: Date;
