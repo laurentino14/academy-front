@@ -41,6 +41,7 @@ export default function Page() {
       body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
+        "access-control-allow-origin": "*",
         authorization: `Bearer ${cookie}`,
       },
     })

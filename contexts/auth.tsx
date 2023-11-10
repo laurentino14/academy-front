@@ -33,6 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "access-control-allow-origin": "*",
         },
         body: JSON.stringify(data),
       })
@@ -65,6 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${rt}`,
+          "access-control-allow-origin": "*",
         },
       })
         .then((res) => res.json())
@@ -93,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "access-control-allow-origin": "*",
         },
         body: JSON.stringify(data),
       })
