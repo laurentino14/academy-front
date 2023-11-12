@@ -61,6 +61,41 @@ export const Header = () => {
             </Link>
           </>
         )}
+
+        {user?.role === "INSTRUCTOR" && (
+          <>
+            <Link passHref href="/app/exercises">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Exercicios
+                </Button>
+              </Link>
+              <Link passHref href="/app/exercises/new">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Cadastrar exercicios
+                </Button>
+              </Link>
+              <Link passHref href="/app/exercises/listing">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Listagem de exercicios
+                </Button>
+              </Link>
+              <Link passHref href="/app/workouts/new">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Cadastro de treino
+                </Button>
+              </Link>
+              <Link passHref href="/app/exercises/list-training-all">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Listar todos os treinos
+                </Button>
+              </Link>
+              <Link passHref href="/app/profile">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Editar perfil
+                </Button>
+              </Link>
+          </>
+        )}
       </div>
       <motion.div
         initial={{ opacity: 1 }}
