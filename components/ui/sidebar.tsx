@@ -56,7 +56,7 @@ export function Sidebar() {
                   Exercicios
                 </Button>
               </Link>
-              <Link passHref href="/app/exercises/register">
+              <Link passHref href="/app/exercises/new">
                 <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
                   Cadastrar exercicios
                 </Button>

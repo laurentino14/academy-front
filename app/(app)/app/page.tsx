@@ -73,7 +73,7 @@ export default function Page() {
 
           <div className="flex flex-col  ">
             <Image src="/assets/logo.png" alt="logo" width={100} height={100} />
-            <p>
+            <p className="">
               "Bem-vindo à sua plataforma de excelência! Aqui, você, instrutor,
               é a inspiração. Desperte o potencial máximo dos seus alunos e
               transforme cada sessão em uma experiência única e motivadora.
