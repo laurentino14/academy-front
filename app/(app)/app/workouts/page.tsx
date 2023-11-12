@@ -1,32 +1,54 @@
 "use client";
 
 import { AuthContext } from "@/contexts/auth";
-import { Set } from "@/models/set";
+import { SetModel } from "@/models/set";
 import { Workout } from "@/models/workout";
+import { env } from "@/utils/env";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
+import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { useContext, useState } from "react";
-
+import cookies from "js-cookie";
+import { useContext, useEffect, useState } from "react";
 export default function Page() {
   const { user } = useContext(AuthContext);
+  const [workouts, setWorkouts] = useState<Workout[]>();
+
+  useEffect(() => {
+    const t = async function () {
+      const at = cookies.get("at");
+      await fetch(env.api + `/workout/user/${user!.id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "access-control-allow-origin": "*",
+          authorization: `Bearer ${at}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setWorkouts(res.data);
+        });
+    };
+    if (user && user.role === "USER") t();
+  }, [user]);
   return (
-    <div className="flex flex-col w-full pt-20 px-20">
+    <div className="flex flex-col w-full py-20 lg:px-20 sm:px-10 px-4">
       <h1 className="text-2xl ">Meus treinos</h1>
       <motion.div layout className="mt-10 space-y-5">
         <AnimatePresence mode="popLayout">
-          {user &&
-            user.workouts.map((workout, i) => {
-              return <>{workout.id}</>;
+          {workouts &&
+            workouts.map((workout, i) => {
+              return <WorkoutCard key={i} workout={workout} />;
             })}
-          <WorkoutCard />
         </AnimatePresence>
       </motion.div>
     </div>
   );
 }
 
-function WorkoutCard({ workout }: { workout?: Workout }) {
+function WorkoutCard({ workout }: { workout: Workout }) {
   const [open, setOpen] = useState(false);
+  console.log(workout, "workout");
   return (
     <motion.div
       initial={false}
@@ -36,11 +58,11 @@ function WorkoutCard({ workout }: { workout?: Workout }) {
       className="w-full  overflow-hidden bg-dark/70 rounded-md "
     >
       <div className="w-full flex px-4 bg-dark items-center justify-between h-[4rem]">
-        <h1 className="font-medium">{workout?.name}Perda de peso</h1>
+        <h1 className="font-medium">{workout.name}</h1>
         <div className="flex gap-5">
           <div className="text-sm text-end flex flex-col">
             <h1 className="font-medium">
-              Professor: {workout?.instructor?.name}Lucas
+              Professor: {workout.instructor.name}
             </h1>
             <h2 className="font-medium text-xs">
               Criado em{" "}
@@ -54,78 +76,109 @@ function WorkoutCard({ workout }: { workout?: Workout }) {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-6 gap-10 px-4">
+      <div className="flex w-full py-4 justify-center gap-10 px-4">
         {/* 'BACK' | 'CHEST' | 'LEGS' | 'SHOULDERS' | 'ARMS' | 'ABS'; */}
-        <div className="w-full flex flex-col gap-2 ">
-          <h1 className="w-full mt-4 font-medium rounded-md bg-gray py-3 text-center">
-            Peito
-          </h1>
-          <ul className="flex flex-col ">
-            {workout?.sets?.map((set, i) => {
-              if (set.type === "CHEST") {
-                return <SetLi key={i} set={set} />;
-              }
-            })}
-          </ul>
-        </div>
-        <div className="w-full flex flex-col gap-2">
-          <h1 className="w-full mt-4 font-medium rounded-md bg-gray py-3 text-center">
-            Costas
-          </h1>
-          <ul className="flex flex-col ">
-            {workout?.sets?.map((set, i) => {
-              if (set.type === "BACK") {
-                return <SetLi key={i} set={set} />;
-              }
-            })}
-          </ul>
-        </div>
-        <div className="w-full flex flex-col gap-2 ">
-          <h1 className="w-full mt-4 font-medium rounded-md bg-gray py-3 text-center">
-            Pernas
-          </h1>
-          <ul className="flex flex-col ">
-            {workout?.sets?.map((set, i) => {
-              if (set.type === "LEGS") {
-                return <SetLi key={i} set={set} />;
-              }
-            })}
-          </ul>
-        </div>
-        <div className="w-full flex flex-col gap-2">
-          <h1 className="w-full mt-4 font-medium rounded-md bg-gray py-3 text-center">
-            Ombros
-          </h1>
-          <ul className="flex flex-col ">
-            {workout?.sets?.map((set, i) => {
-              if (set.type === "SHOULDERS") {
-                return <SetLi key={i} set={set} />;
-              }
-            })}
-          </ul>
-        </div>
-        <div className="w-full flex flex-col gap-2 ">
-          <h1 className="w-full mt-4 font-medium rounded-md bg-gray py-3 text-center">
-            Bracos
-          </h1>
-          <ul className="flex flex-col ">
-            {workout?.sets?.map((set, i) => {
-              if (set.type === "ARMS") {
-                return <SetLi key={i} set={set} />;
-              }
-            })}
-          </ul>
-        </div>
-        <div className="w-full flex flex-col gap-2">
-          <h1 className="w-full mt-4 font-medium rounded-md bg-gray py-3 text-center">
-            Abdomen
-          </h1>
-          <ul className="flex flex-col ">
-            {workout?.sets?.map((set, i) => {
-              if (set.type === "ABS") {
-                return <SetLi key={i} set={set} />;
-              }
-            })}
+        <div className="w-full  flex  items-center gap-2 ">
+          <ul className="flex h-full w-full flex-col gap-5   flex-1  ">
+            <ul className="space-y-2 flex flex-col">
+              <h1 className="font-medium text-sm  w-full  text-opacity-70 ">
+                Domingo
+              </h1>
+              <div className="flex gap-5 flex-wrap  ">
+                {workout?.sets
+                  ?.sort((a, b) => b.type.length - a.type.length)
+                  .map((set, i) => {
+                    if (set.day === "SUNDAY") {
+                      return <SetLi key={i} set={set} />;
+                    }
+                  })}
+              </div>
+            </ul>
+            <ul className="space-y-2 flex  flex-col">
+              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                Segunda
+              </h1>
+              <div className="flex gap-5 flex-wrap  ">
+                {workout?.sets
+                  ?.sort((a, b) => b.type.length - a.type.length)
+                  .map((set, i) => {
+                    if (set.day === "MONDAY") {
+                      return <SetLi key={i} set={set} />;
+                    }
+                  })}
+              </div>
+            </ul>
+            <ul className="space-y-2 flex  flex-col">
+              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                Terça
+              </h1>
+              <div className="flex gap-5 flex-wrap  ">
+                {workout?.sets
+                  ?.sort((a, b) => b.type.length - a.type.length)
+                  .map((set, i) => {
+                    if (set.day === "TUESDAY") {
+                      return <SetLi key={i} set={set} />;
+                    }
+                  })}
+              </div>
+            </ul>
+            <ul className="space-y-2 flex  flex-col">
+              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                Quarta
+              </h1>
+              <div className="flex gap-5 flex-wrap  ">
+                {workout?.sets
+                  ?.sort((a, b) => b.type.length - a.type.length)
+                  .map((set, i) => {
+                    if (set.day === "WEDNESDAY") {
+                      return <SetLi key={i} set={set} />;
+                    }
+                  })}
+              </div>
+            </ul>
+
+            <ul className="space-y-2 flex  flex-col">
+              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                Quinta
+              </h1>
+              <div className="flex gap-5 flex-wrap  ">
+                {workout?.sets
+                  ?.sort((a, b) => b.type.length - a.type.length)
+                  .map((set, i) => {
+                    if (set.day === "THURSDAY") {
+                      return <SetLi key={i} set={set} />;
+                    }
+                  })}
+              </div>
+            </ul>
+            <ul className="space-y-2 flex  flex-col">
+              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                Sexta
+              </h1>
+              <div className="flex gap-5 flex-wrap  ">
+                {workout?.sets
+                  ?.sort((a, b) => b.type.length - a.type.length)
+                  .map((set, i) => {
+                    if (set.day === "FRIDAY") {
+                      return <SetLi key={i} set={set} />;
+                    }
+                  })}
+              </div>
+            </ul>
+            <ul className="space-y-2 flex  flex-col">
+              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                Sábado
+              </h1>
+              <div className="flex gap-5 flex-wrap  ">
+                {workout?.sets
+                  ?.sort((a, b) => b.type.length - a.type.length)
+                  .map((set, i) => {
+                    if (set.day === "SATURDAY") {
+                      return <SetLi key={i} set={set} />;
+                    }
+                  })}
+              </div>
+            </ul>
           </ul>
         </div>
       </div>
@@ -133,17 +186,34 @@ function WorkoutCard({ workout }: { workout?: Workout }) {
   );
 }
 
-function SetLi({ set }: { set: Set }) {
+function SetLi({ set }: { set: SetModel }) {
   return (
-    <li className="flex justify-between text-sm">
-      <h2 className="font-medium">{set.Exercise.name}</h2>
-      <div className="space-x-2">
-        <span className="text-sm">
-          {3}x{set.reps}
-        </span>
-        <span>
-          {set.weight}
-          {set.weight && "kg"}
+    <li className="flex max-w-xs w-fit rounded-md  h-10 bg-black/20 px-4 items-center gap-2 justify-between text-sm">
+      <div className="flex items-center  gap-5">
+        <h2 className="font-medium ">{set.exercise.name}</h2>
+        <span
+          className={clsx("text-xs font-semibold  px-2 py-[2px] rounded-md", {
+            "text-red-500 bg-black/50": set.type === "ARMS",
+            "text-blue-500 bg-black/50": set.type === "BACK",
+            "text-green-500 bg-black/50": set.type === "LEGS",
+            "text-yellow-500 bg-black/50": set.type === "SHOULDERS",
+            "text-primary bg-black/50 ": set.type === "CHEST",
+            "text-purple-500 bg-black/50": set.type === "ABS",
+          })}
+        >
+          {set.type === "ABS"
+            ? "Abdominal".toUpperCase()
+            : set.type === "ARMS"
+            ? "Braço".toUpperCase()
+            : set.type === "BACK"
+            ? "Costas".toUpperCase()
+            : set.type === "CHEST"
+            ? "Peito".toUpperCase()
+            : set.type === "LEGS"
+            ? "Perna".toUpperCase()
+            : set.type === "SHOULDERS"
+            ? "Ombro".toUpperCase()
+            : "N/A"}
         </span>
       </div>
     </li>
