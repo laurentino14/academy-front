@@ -6,7 +6,7 @@ import { env } from "@/utils/env";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 type IForm = {
   id: string;
@@ -15,6 +15,13 @@ type IForm = {
   password?: string;
   birthdate?: string;
   gender?: string;
+};
+
+type IFormPassword = {
+  id: string;
+  oldPassword: string;
+  password: string;
+  passwordConfirmation: string;
 };
 export default function Page() {
   const { user, setUser } = useContext(AuthContext);
@@ -50,7 +57,32 @@ export default function Page() {
       .then((res) => res.json())
       .then((res) => setUser(res.data));
   };
+  const methodsPassword = useForm<IFormPassword>({
+    mode: "onChange",
+    defaultValues: {
+      id: user?.id,
+    },
+  });
 
+  useEffect(() => {
+    methodsPassword.reset({
+      id: user?.id,
+    });
+  }, [user, methodsPassword]);
+
+  async function submitPassword(data: IFormPassword) {
+    await fetch(env.api + "/user/password", {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        "access-control-allow-origin": "*",
+        authorization: `Bearer ${cookies.get("at")}`,
+      },
+    })
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
+  }
   const [active, setActive] = useState(1);
 
   return (
@@ -119,7 +151,7 @@ export default function Page() {
                 </Button>
               </motion.form>
             </FormProvider>
-            <FormProvider {...methods}>
+            <FormProvider {...methodsPassword}>
               <motion.form
                 animate={{
                   translateX: active === 2 ? 0 : "100%",
@@ -127,7 +159,7 @@ export default function Page() {
                   position: active === 2 ? "relative" : "absolute",
                 }}
                 transition={{ duration: 0.5, display: { position: 0.5 } }}
-                onSubmit={methods.handleSubmit(submit)}
+                onSubmit={methodsPassword.handleSubmit(submitPassword)}
                 className="flex w-full space-y-4 mt-10 flex-col"
               >
                 <div className="space-x-4 flex flex-row flex-nowrap">
@@ -149,14 +181,14 @@ export default function Page() {
                 <div className="space-x-4 flex flex-row flex-nowrap">
                   <InputForm
                     className="w-full"
-                    name="confirmPassword"
+                    name="passwordConfirmation"
                     placeholder="Confirme a nova senha"
                     type="password"
                   />
                 </div>
 
                 <Button intent="primary" type="submit">
-                  Alterar informações
+                  Alterar senha
                 </Button>
               </motion.form>
             </FormProvider>
