@@ -18,13 +18,14 @@ export default function Page() {
             user.workouts.map((workout, i) => {
               return <>{workout.id}</>;
             })}
+          <WorkoutCard />
         </AnimatePresence>
       </motion.div>
     </div>
   );
 }
 
-function WorkoutCard({ workout }: { workout: Workout }) {
+function WorkoutCard({ workout }: { workout?: Workout }) {
   const [open, setOpen] = useState(false);
   return (
     <motion.div

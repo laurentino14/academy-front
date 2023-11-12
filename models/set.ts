@@ -10,9 +10,9 @@ export abstract class Set {
   abstract createdAt: Date | string;
   abstract updatedAt: Date | string;
   abstract exerciseId: string;
+  abstract Exercise: Exercise;
   abstract workoutId: string;
   abstract Workout: Workout;
-  abstract Exercise: Exercise;
 }
 
 export type Type = "BACK" | "CHEST" | "LEGS" | "SHOULDERS" | "ARMS" | "ABS";

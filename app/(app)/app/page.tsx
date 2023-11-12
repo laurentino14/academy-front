@@ -1,10 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { CardSet } from "@/components/ui/card-set";
 import { AuthContext } from "@/contexts/auth";
 import { Set } from "@/models/set";
-import { CheckCircledIcon } from "@radix-ui/react-icons";
-import clsx from "clsx";
+import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 
 const days = [
@@ -32,74 +31,59 @@ export default function Page() {
 
   return (
     <div className="w-full pt-20 flex-col flex space-y-10 px-20 justify-center">
-      <h1 className="w-full  font-medium text-2xl">Exercícios do dia</h1>
-      {sets.map((set, i) => {
-        const find = user?.history.find(
-          (h) => h.setId === set.id && h.createdAt === new Date()
-        );
-
-        if (find) {
-          return <CardSet finished key={i} set={set} />;
-        }
-
-        return <CardSet key={i} set={set} />;
-      })}
-
-      <div className="grid gap-y-10 grid-cols-4">
-        <CardSet finished />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-        <CardSet />
-      </div>
-    </div>
-  );
-}
-
-function CardSet({ finished, set }: { finished?: boolean; set?: Set }) {
-  return (
-    <div
-      className={clsx(
-        " rounded-md w-60 h-60 flex flex-col items-center justify-between p-2",
-        {
-          "bg-gray1": !finished,
-          "bg-dark/90": finished,
-        }
-      )}
-    >
-      <h1
-        className={clsx("font-medium text-xl ", {
-          "text-white": !finished,
-          "text-primary": finished,
-        })}
-      >
-        Remada
-      </h1>
-      {finished && (
-        <CheckCircledIcon className="text-primary accent-primary stroke-primary stroke-1 fill-primary w-24 h-24" />
-      )}
-      {finished && <div></div>}
-      {!finished && (
+      {user?.role === "USER" && (
         <>
-          <div className="flex flex-col items-center">
-            <p className="text-gray-400 text-sm">3x12</p>
-            <p className="text-gray-400 text-sm">20,0kg</p>
+          {/*  */}
+          <h1 className="w-full  font-medium text-2xl">Exercícios do dia</h1>
+          {sets.map((set, i) => {
+            const find = user?.history.find(
+              (h) => h.setId === set.id && h.createdAt === new Date()
+            );
+
+            if (find) {
+              return <CardSet finished key={i} set={set} />;
+            }
+
+            return <CardSet key={i} set={set} />;
+          })}
+
+          <div className="grid gap-y-10 grid-cols-4">
+            <CardSet finished />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
+            <CardSet />
           </div>
-          <Button intent="white" className="w-full">
-            Finalizar
-          </Button>
         </>
       )}
+
+      {user?.role === "INSTRUCTOR" && (
+        <>
+          {/* INSTRUCTOR */}
+
+          <div className="flex flex-col  ">
+            <Image src="/assets/logo.png" alt="logo" width={100} height={100} />
+            <p>
+              "Bem-vindo à sua plataforma de excelência! Aqui, você, instrutor,
+              é a inspiração. Desperte o potencial máximo dos seus alunos e
+              transforme cada sessão em uma experiência única e motivadora.
+              Vamos construir juntos um caminho de sucesso fitness!"
+            </p>
+          </div>
+        </>
+      )}
+
+      {user?.role === "ADMIN" && <>{/* ADMIN */}</>}
     </div>
   );
 }
