@@ -30,7 +30,7 @@ export default function Page() {
   );
 
   return (
-    <div className="w-full pt-20 flex-col flex space-y-10 px-20 justify-center">
+    <div className="w-full flex-col flex space-y-10 px-10 justify-center">
       {user?.role === "USER" && (
         <>
           {/*  */}
@@ -71,13 +71,12 @@ export default function Page() {
         <>
           {/* INSTRUCTOR */}
 
-          <div className="flex flex-col ite ">
-            <Image src="/assets/logo.png" alt="logo" width={100} height={100} />
-            <p className="">
-              "Bem-vindo à sua plataforma de excelência! Aqui, você, instrutor,
-              é a inspiração. Desperte o potencial máximo dos seus alunos e
+          <div className="flex flex-col items-center ">
+            <Image className="lg:hidden md:hidden"  src="/assets/logo.png" alt="logo" width={600} height={600} quality={100} />
+            <h1 className="font-bold">Aqui você é a inspiração!</h1>
+            <p className="max-w-sm text-center ">
+              Desperte o potencial máximo dos seus alunos e
               transforme cada sessão em uma experiência única e motivadora.
-              Vamos construir juntos um caminho de sucesso fitness!"
             </p>
           </div>
         </>

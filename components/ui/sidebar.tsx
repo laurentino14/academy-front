@@ -9,7 +9,7 @@ export function Sidebar() {
   const { user, signOut } = useContext(AuthContext);
 
   return (
-    <aside className="bg-dark h-screen hidden md:flex flex-col items-center justify-between sticky top-0  w-full max-w-xs">
+    <aside className="bg-dark min-h-screen hidden md:flex flex-col items-center justify-between sticky top-0  w-full max-w-xs">
       <div className="w-full flex h-full flex-col">
         <Link href="/app">
           <Image src="/assets/logo.png" alt="" width={500} height={500} />
