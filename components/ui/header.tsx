@@ -65,7 +65,7 @@ export const Header = () => {
         </motion.button>
       </div>
 
-      <div className="flex flex-col w-full mt-10 space-y-5 h-full overflow-scroll">
+      <div className="flex flex-col w-full mt-10 space-y-5 h-full overflow-y-auto overflow-x-hidden">
         {user?.role === "USER" && (
           <>
             <Link passHref href="/app/workouts">
