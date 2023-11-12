@@ -47,7 +47,7 @@ export default function Page() {
             return <CardSet key={i} set={set} />;
           })}
 
-          <div className="flex justify-center lg:justify-between items-center flex-wrap gap-10 ">
+          <div className="flex justify-center 2xl:justify-between items-center flex-wrap gap-10 ">
             <CardSet finished />
             <CardSet />
             <CardSet />

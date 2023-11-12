@@ -9,8 +9,8 @@ export function Sidebar() {
   const { user, signOut } = useContext(AuthContext);
 
   return (
-    <aside className="bg-dark min-h-screen h-screen hidden md:flex flex-col items-center justify-between sticky top-0  w-full max-w-xs">
-      <div className="w-full flex h-full flex-col">
+    <aside className="bg-dark h-screen overflow-scroll  hidden md:flex flex-col items-center justify-between relative  w-full max-w-xs">
+      <div className="w-full flex  flex-col">
         <Link href="/app">
           <Image src="/assets/logo.png" alt="" width={500} height={500} />
         </Link>
@@ -18,9 +18,10 @@ export function Sidebar() {
           Bem vindo{" "}
           <span className="font-medium text-primary">{user?.name}</span>!{" "}
         </h1>
-        <div className="w-full flex-1 h-full overflow-y-auto px-4 space-y-4 mt-20">
+
+        <div className="w-full   overflow-y-auto px-4 space-y-4 mt-20">
           {user?.role === "USER" && (
-            <div className="flex flex-col space-y-4">
+            <div className="flex    flex-col space-y-4">
               <Link passHref href="/app/workouts">
                 <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
                   Meus treinos
@@ -85,7 +86,18 @@ export function Sidebar() {
           )}
         </div>
       </div>
-      <div className="w-full  p-4">
+      <div className="w-full   p-4">
+        {user?.role === "USER" && (
+          <>
+            <p className="mt-2 text-primary font-medium w-full text-center">
+              {user?.hash}
+            </p>
+            <p className="my-2 text-xs opacity-50 font-medium w-4/5 mx-auto text-center">
+              Ao solicitar um treino, voce deve informar este número ao
+              instrutor.
+            </p>
+          </>
+        )}
         <Button
           onClick={(e) => {
             e.preventDefault();

@@ -15,19 +15,19 @@ export const Header = () => {
       layoutRoot
       animate={{
         height: open ? "100vh" : "3.5rem",
-        overflow: "hidden",
         width: "100%",
       }}
       transition={{
         duration: 0.3,
         type: "tween",
       }}
-      className="flex px-4 flex-col bg-dark fixed w-full z-10 top-0 md:hidden"
+      className="flex h-[3.5rem] overflow-hidden px-4 flex-col bg-dark fixed w-full z-10 top-0 md:hidden"
     >
       <div className="py-3 w-full flex justify-between">
         <Link href="/app">
           <div className="w-20 h-8 bg-cover bg-no-repeat  bg-[url(/assets/logo-wo-name.png)] bg-center " />
         </Link>
+
         <motion.button
           layout
           layoutRoot
@@ -38,7 +38,7 @@ export const Header = () => {
             setOpen(!open);
           }}
         >
-          <AnimatePresence initial={true} mode="popLayout">
+          <AnimatePresence initial={false} mode="popLayout">
             {!open && (
               <motion.div
                 layout
@@ -130,6 +130,17 @@ export const Header = () => {
         transition={{ duration: 0.2 }}
         className="flex flex-col space-y-4 mb-5"
       >
+        {user?.role === "USER" && (
+          <div className="flex flex-col">
+            <p className=" text-primary font-medium w-full text-center">
+              {user?.hash}
+            </p>
+            <p className=" text-xs opacity-50 font-medium w-4/5 mx-auto text-center">
+              Ao solicitar um treino, voce deve informar este número ao
+              instrutor.
+            </p>
+          </div>
+        )}
         <Link passHref href="/app/profile">
           <Button
             onClick={(e) => setOpen(!open)}

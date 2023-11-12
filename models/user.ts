@@ -6,6 +6,7 @@ export type User = {
   sets: Set[];
   id: string;
   role: Role;
+  hash: number;
   doc: string;
   gender: string;
   name: string;
