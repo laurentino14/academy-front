@@ -76,7 +76,7 @@ export function CardSet({
             <Button
               onClick={(e) => {
                 e.preventDefault();
-                // handleSet();
+                handleSet();
                 setMFinished(true);
               }}
               intent="white"
