@@ -1,9 +1,9 @@
 import { History } from "./history";
-import { Set } from "./set";
+import { SetModel } from "./set";
 import { Workout } from "./workout";
 
 export type User = {
-  sets: Set[];
+  sets: SetModel[];
   id: string;
   role: Role;
   hash: number;

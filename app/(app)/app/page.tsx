@@ -2,7 +2,7 @@
 
 import { CardSet } from "@/components/ui/card-set";
 import { AuthContext } from "@/contexts/auth";
-import { Set } from "@/models/set";
+import { SetModel } from "@/models/set";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 
@@ -18,7 +18,7 @@ const days = [
 
 export default function Page() {
   const { user } = useContext(AuthContext);
-  const [sets, setSets] = useState<Set[]>([]);
+  const [sets, setSets] = useState<SetModel[]>([]);
   useEffect(
     () => {
       user?.sets.forEach((set) => {

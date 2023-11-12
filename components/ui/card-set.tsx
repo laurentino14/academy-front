@@ -1,8 +1,14 @@
-import { Set } from "@/models/set";
+import { SetModel } from "@/models/set";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { clsx } from "clsx";
 import { Button } from "./button";
-import { CheckCircledIcon } from "@radix-ui/react-icons";
-export function CardSet({ finished, set }: { finished?: boolean; set?: Set }) {
+export function CardSet({
+  finished,
+  set,
+}: {
+  finished?: boolean;
+  set?: SetModel;
+}) {
   return (
     <div
       className={clsx(
