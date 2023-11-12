@@ -37,33 +37,56 @@ export default function Page() {
       <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
         <div className="w-full">
             <h1 className={clsx(" text-center bg-white  text-gray  w-full font-medium px-3 py-3 rounded-md")}>
-                Novo exercício
+                Novo treino
             </h1>
             <FormProvider {...methods}>
-              <form
-                onSubmit={methods.handleSubmit(submit)}
+              <form onSubmit={methods.handleSubmit(submit)}
                 className="flex  w-full space-y-4 mt-10 flex-col"
               >
                 <div className="space-x-4 w-full">
                   <InputForm
                     className="w-full"
-                    placeholder="Nome do exercício"
+                    placeholder="Nome do exercicio"
                     name="name"
                     type="text"
                   />
                 </div>
                 <InputForm
                   placeholder="Descrição"
-                  name="description"
+                  name="descrição"
                   type="text"
                 />
+                <div className="space-x-4 flex flex-row flex-nowrap">
+                  <InputForm
+                    className="w-full"
+                    name="carga"
+                    placeholder="Carga Kg."
+                    type="number"
+                  />
+                  <InputForm
+                    className="w-full"
+                    name="text"
+                    placeholder=""
+                    type="password"
+                  />
+                  <InputForm
+                    className="w-full"
+                    name="password"
+                    placeholder="Senha"
+                    type="password"
+                  />
+                </div>
                 <Button intent="primary" type="submit">
-                  Cadastrar 
+                  Cadastrar Treino
                 </Button>
               </form>
             </FormProvider>
         </div>
+    
+    
+    
+    
+        </div>
       </div>
-    </div>
   );
 }
