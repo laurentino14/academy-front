@@ -12,9 +12,7 @@ type IForm = {
   id: string;
   name?: string;
   email?: string;
-  password?: string;
-  birthdate?: string;
-  gender?: string;
+  password: string;
 };
 
 type IFormPassword = {
@@ -31,9 +29,6 @@ export default function Page() {
       id: user?.id,
       name: user?.name,
       email: user?.email,
-      gender: undefined,
-      birthdate: undefined,
-      password: undefined,
     },
   });
 
@@ -42,7 +37,7 @@ export default function Page() {
       id: user!.id,
       name: data.name !== "" ? data.name : undefined,
       email: data.email !== "" ? data.email : undefined,
-      password: data.password !== "" ? data.password : undefined,
+      password: data.password,
     };
     const cookie = cookies.get("at");
     await fetch(env.api + "/user", {
@@ -55,7 +50,8 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then((res) => setUser(res.data));
+      .then((res) => setUser(res.data))
+      .then(() => methods.reset({ id: user?.id, password: "" }));
   };
   const methodsPassword = useForm<IFormPassword>({
     mode: "onChange",
@@ -81,12 +77,20 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
+      .then(() =>
+        methodsPassword.reset({
+          id: user?.id,
+          oldPassword: "",
+          password: "",
+          passwordConfirmation: "",
+        })
+      )
       .catch((err) => console.log(err));
   }
   const [active, setActive] = useState(1);
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center">
+    <div className="min-h-screen px-4 w-full flex items-center justify-center">
       <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
         <div className="w-full flex flex-nowrap">
           <Button
@@ -109,7 +113,7 @@ export default function Page() {
         <motion.div
           animate={{ height: "auto" }}
           layoutRoot
-          className="w-full  relative overflow-hidden"
+          className="w-full relative overflow-hidden"
         >
           <AnimatePresence mode="wait" initial={false} presenceAffectsLayout>
             <FormProvider {...methods}>
