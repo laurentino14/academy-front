@@ -30,7 +30,7 @@ export default function Page() {
   );
 
   return (
-    <div className="w-full flex-col flex space-y-10 px-10 justify-center">
+    <div className="w-full flex-col flex space-y-10 py-20 px-10 justify-center">
       {user?.role === "USER" && (
         <>
           {/*  */}
@@ -47,7 +47,7 @@ export default function Page() {
             return <CardSet key={i} set={set} />;
           })}
 
-          <div className="grid gap-y-10 grid-cols-4">
+          <div className="flex justify-center lg:justify-between items-center flex-wrap gap-10 ">
             <CardSet finished />
             <CardSet />
             <CardSet />
@@ -72,11 +72,18 @@ export default function Page() {
           {/* INSTRUCTOR */}
 
           <div className="flex flex-col items-center ">
-            <Image className="lg:hidden md:hidden"  src="/assets/logo.png" alt="logo" width={600} height={600} quality={100} />
+            <Image
+              className="lg:hidden md:hidden"
+              src="/assets/logo.png"
+              alt="logo"
+              width={600}
+              height={600}
+              quality={100}
+            />
             <h1 className="font-bold">Aqui você é a inspiração!</h1>
             <p className="max-w-sm text-center ">
-              Desperte o potencial máximo dos seus alunos e
-              transforme cada sessão em uma experiência única e motivadora.
+              Desperte o potencial máximo dos seus alunos e transforme cada
+              sessão em uma experiência única e motivadora.
             </p>
           </div>
         </>

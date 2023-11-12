@@ -4,10 +4,10 @@ import { Sidebar } from "@/components/ui/sidebar";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="flex flex-col lg:flex-row min-h-screen bg-gray">
+      <div className="flex flex-col md:flex-row min-h-screen bg-gray">
         <Sidebar />
         <Header />
-        {children}
+        <div className="overflow-scroll w-full">{children}</div>
       </div>
     </>
   );
