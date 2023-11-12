@@ -31,11 +31,19 @@ export default function Page() {
           <div className="flex mt-10 w-full flex-col gap-4">
             <InputForm name="name" type="text" placeholder="Nome" />
             <InputForm name="email" type="email" placeholder="E-mail" />
-            <select className="w-full bg-gray px-3 py-3 gap-2 appearance-none rounded-md" defaultValue={"Select"} name="gender" type="text" placeholder="Gênero" >
-              <option className="hidden" value="GENERO">Genero</option>
-              <option  value="MASC">Masculino</option>
-              <option  value="FEM">Feminino</option>
-              <option  value="OUTROS">Outros</option>
+            <select
+              {...methods.register("gender")}
+              className="w-full bg-gray px-3 py-3 gap-2 appearance-none rounded-md"
+              defaultValue={"Select"}
+              name="gender"
+              placeholder="Gênero"
+            >
+              <option className="hidden" value="GENERO">
+                Genero
+              </option>
+              <option value="MASC">Masculino</option>
+              <option value="FEM">Feminino</option>
+              <option value="OUTROS">Outros</option>
             </select>
             <div className="flex gap-4 max-w-xs">
               <InputForm

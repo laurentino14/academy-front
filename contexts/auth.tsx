@@ -9,6 +9,7 @@ export type ISignUpData = {
   doc: string;
   name: string;
   email: string;
+  gender: string;
   birthdate: string;
   password: string;
 };
