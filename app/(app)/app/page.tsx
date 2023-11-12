@@ -30,7 +30,7 @@ export default function Page() {
   );
 
   return (
-    <div className="w-full flex-col flex space-y-10 py-20 px-10 justify-center">
+    <div className="w-full flex-col flex space-y-10 min-h-full py-20 px-10 justify-center">
       {user?.role === "USER" && (
         <>
           {/*  */}
@@ -71,7 +71,7 @@ export default function Page() {
         <>
           {/* INSTRUCTOR */}
 
-          <div className="flex flex-col items-center ">
+          <div className="flex flex-col justify-center items-center ">
             <Image
               className="lg:hidden md:hidden"
               src="/assets/logo.png"
@@ -81,7 +81,7 @@ export default function Page() {
               quality={100}
             />
             <h1 className="font-bold">Aqui você é a inspiração!</h1>
-            <p className="max-w-sm text-center ">
+            <p className="max-w-sm  text-center ">
               Desperte o potencial máximo dos seus alunos e transforme cada
               sessão em uma experiência única e motivadora.
             </p>
