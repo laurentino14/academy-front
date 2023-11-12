@@ -22,7 +22,7 @@ export const Header = () => {
         duration: 0.3,
         type: "tween",
       }}
-      className="flex  px-4 flex-col bg-dark fixed w-full z-10 top-0 md:hidden"
+      className="flex px-4 flex-col bg-dark fixed w-full z-10 top-0 md:hidden"
     >
       <div className="py-3 w-full flex justify-between">
         <Link href="/app">

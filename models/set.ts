@@ -1,18 +1,12 @@
-import { Exercise } from "./exercise";
-import { Workout } from "./workout";
 
 export abstract class Set {
-  abstract id: string;
   abstract reps: number;
   abstract type: Type;
   abstract weight?: number;
   abstract day: Day;
-  abstract createdAt: Date | string;
-  abstract updatedAt: Date | string;
+  abstract machineId: string;
   abstract exerciseId: string;
-  abstract Exercise: Exercise;
-  abstract workoutId: string;
-  abstract Workout: Workout;
+  abstract series: number;
 }
 
 export type Type = "BACK" | "CHEST" | "LEGS" | "SHOULDERS" | "ARMS" | "ABS";
