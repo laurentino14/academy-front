@@ -1,7 +1,7 @@
-export class History {
-  id: string;
-  setId: string;
-  createdAt: Date | string;
-  updatedAt: Date | string;
-  userId: string;
+export abstract class History {
+  abstract id: string;
+  abstract setId: string;
+  abstract createdAt: Date | string;
+  abstract updatedAt: Date | string;
+  abstract userId: string;
 }

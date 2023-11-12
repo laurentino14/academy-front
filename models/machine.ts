@@ -1,9 +1,9 @@
-import { Set } from './set';
+import { Set } from "./set";
 
-export class Machine {
-  id: string;
-  name: string;
-  createdAt: Date | string;
-  updatedAt: Date | string;
-  sets?: Set[];
+export abstract class Machine {
+  abstract id: string;
+  abstract name: string;
+  abstract createdAt: Date | string;
+  abstract updatedAt: Date | string;
+  abstract sets?: Set[];
 }
