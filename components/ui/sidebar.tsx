@@ -27,11 +27,6 @@ export function Sidebar() {
                   Meus treinos
                 </Button>
               </Link>
-              <Link passHref href="/app/profile">
-                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
-                  Editar perfil
-                </Button>
-              </Link>
             </div>
           )}
           {user?.role === "ADMIN" && (
@@ -77,18 +72,13 @@ export function Sidebar() {
                   Listar todos os treinos
                 </Button>
               </Link>
-              <Link passHref href="/app/profile">
-                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
-                  Editar perfil
-                </Button>
-              </Link>
             </div>
           )}
         </div>
       </div>
-      <div className="w-full   p-4">
+      <div className="w-full space-y-3   p-4">
         {user?.role === "USER" && (
-          <>
+          <div>
             <p className="mt-2 text-primary font-medium w-full text-center">
               {user?.hash}
             </p>
@@ -96,8 +86,13 @@ export function Sidebar() {
               Ao solicitar um treino, voce deve informar este número ao
               instrutor.
             </p>
-          </>
+          </div>
         )}
+        <Link passHref href="/app/profile">
+          <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+            Editar perfil
+          </Button>
+        </Link>
         <Button
           onClick={(e) => {
             e.preventDefault();

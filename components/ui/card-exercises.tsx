@@ -1,7 +1,21 @@
+import { env } from '@/utils/env';
 import { Pencil2Icon, TrashIcon } from '@radix-ui/react-icons'
-import { ISignUpData } from '../../contexts/auth';
+import cookies from 'js-cookie'
 
 export default function CardExercise(){
+
+    const handleRemove = async ( id: string) => {
+        
+        await fetch(env.api + ` /exercise/${id} `, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${cookies}` 
+            }
+        })
+        .then( )
+    }
+
 
   return (
         <div className="w-32 h-24 flex flex-col gap-1 rounded-md p-2 bg-dark">
@@ -11,10 +25,8 @@ export default function CardExercise(){
             </div>
             <div className="w-full flex justify-around  pb-4 text-center ">
                 <button className=" flex justify-center items-center w-fit p-1 hover:bg-opacity-80  rounded-md "><Pencil2Icon  color="#EB1D63" className=" w-5 h-5"/></button>
-                <button className=" flex justify-center items-center w-fit p-1   rounded-md "><TrashIcon color="#EB1D63"  className=" w-5 h-5" /> </button>
+                <button onClik={handleRemove} className=" flex justify-center items-center w-fit p-1   rounded-md "><TrashIcon color="#EB1D63"  className=" w-5 h-5" /> </button>
             </div>
         </div>   
   );
 }
-
-

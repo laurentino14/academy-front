@@ -16,7 +16,7 @@ export default function Page() {
       body: JSON.stringify(exercise),
     }).then(() => router.push("/app/exercises"));
   }
-
+  
   useEffect(() => {
     async function getExercise() {
       await fetch(env.api + "/exercises/" + params.id, { method: "GET" })

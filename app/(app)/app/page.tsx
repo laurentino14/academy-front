@@ -3,27 +3,42 @@
 import { CardSet } from "@/components/ui/card-set";
 import { AuthContext } from "@/contexts/auth";
 import { SetModel } from "@/models/set";
+import { env } from "@/utils/env";
+import cookies from "js-cookie";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 
 const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  "SUNDAY",
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY",
 ];
 
 export default function Page() {
   const { user } = useContext(AuthContext);
-  const [sets, setSets] = useState<SetModel[]>([]);
+  const [sets, setSets] = useState<SetModel[]>();
+  async function t() {
+    const at = cookies.get("at");
+    await fetch(env.api + `/set/user/${user!.id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "access-control-allow-origin": "*",
+        authorization: `Bearer ${at}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setSets(res.data);
+      });
+  }
   useEffect(
     () => {
-      user?.sets.forEach((set) => {
-        setSets([...sets, set]);
-      });
+      if (user && user.role === "USER") t();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [user]
@@ -31,38 +46,29 @@ export default function Page() {
 
   return (
     <div className="w-full flex-col flex space-y-10 min-h-full py-20 px-10 justify-center">
-      {user?.role === "USER" && (
+      {user && user.role === "USER" && (
         <>
           {/*  */}
           <h1 className="w-full  font-medium text-2xl">Exercícios do dia</h1>
-          {sets.map((set, i) => {
-            const find = user?.history.find(
-              (h) => h.setId === set.id && h.createdAt === new Date()
-            );
 
-            if (find) {
-              return <CardSet finished key={i} set={set} />;
-            }
+          <div className="flex justify-center sm:justify-between lg:justify-normal items-center flex-wrap gap-5 lg:gap-10 ">
+            {sets &&
+              sets.map((set, i) => {
+                const find = user.history.find(
+                  (h) =>
+                    h.setId === set.id &&
+                    new Date(h.createdAt).toDateString() ===
+                      new Date().toDateString()
+                );
 
-            return <CardSet key={i} set={set} />;
-          })}
+                if (find) {
+                  return <CardSet finished key={i} set={set} />;
+                }
 
-          <div className="flex justify-center 2xl:justify-between items-center flex-wrap gap-10 ">
-            <CardSet finished />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
-            <CardSet />
+                if (set.day === days[new Date().getDay()]) {
+                  return <CardSet key={i} set={set} />;
+                }
+              })}
           </div>
         </>
       )}
