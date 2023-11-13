@@ -37,16 +37,16 @@ export function CardInstructors({
   };
 
   return (
-    <div className=" h-24 flex items-center justify-between  gap-10 rounded-md py-2 px-4 bg-dark">
+    <div className=" h-24 flex items-center justify-between  gap-10 rounded-md  px-4 bg-dark">
       <div className="flex flex-col space-y-1 ">
-        <h1 className="w-full  font-medium rounded-md text-white text-center">
+        <h1 className="  font-medium rounded-md text-white text-center">
           {data.name}
         </h1>
         <p className="w-full h-6 font-light text-sm  text-white/50 text-center  ">
           {data.hash}
         </p>
       </div>
-      <div className="w-full flex items-center h-full  pb-4 text-center ">
+      <div className=" flex items-center h-full   text-center ">
         <button
           onClick={(e) => {
             e.preventDefault();
