@@ -133,9 +133,16 @@ export default function Page() {
                           <option className="text-center"  value="BW-15">BW-15</option>
                         </select> 
                       </div>
-                      <div className="w-full flex justify-between gap-4">
-                        <InputForm name={`sets.${i}.series`} className=" text-center w-full rounded-md bg-primary" type="number"  />
-                        <InputForm name={`sets.${i}.reps`} className=" text-center w-full rounded-md bg-primary" type="number"  />
+                      <div className="w-full flex justify-between items-center gap-4">
+                        <div className="w-1/2">
+                          <label className="w-full px-1" htmlFor="">Series</label>
+                          <InputForm name={`sets.${i}.series`} className=" text-center w-full rounded-md bg-primary" type="number"  />
+                        </div>
+                        <p className="">X</p>
+                        <div className="w-1/2 text-end">
+                          <label className="w-full px-1" htmlFor="">Repetições</label>
+                          <InputForm name={`sets.${i}.reps`} className=" text-center w-full rounded-md bg-primary" type="number"  />
+                        </div>
                       </div>
                     </div>
                   </div>
