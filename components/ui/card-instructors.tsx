@@ -1,58 +1,56 @@
-import { Exercise } from "@/models/exercise";
+import { User } from "@/models/user";
 import { env } from "@/utils/env";
-import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import { TrashIcon } from "@radix-ui/react-icons";
 import cookies from "js-cookie";
 import { Dispatch, SetStateAction } from "react";
 
-export function CardExercise({
+export function CardInstructors({
   data,
-  setExercise,
+  setInstructors,
 }: {
-  data: Exercise;
-  setExercise: Dispatch<SetStateAction<Exercise[] | undefined>>;
+  data: User;
+  setInstructors: Dispatch<SetStateAction<User[] | undefined>>;
 }) {
-  const handleRemove = async (id: string) => {
+  const handleDelete = async (id: string) => {
     const at = cookies.get("at");
-
-    await fetch(env.api + `/exercise/${id}`, {
+    await fetch(env.api + `/user/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${at}`,
       },
     }).finally(async () => {
-      await fetch(env.api + `/exercise`, {
+      await fetch(env.api + "/user", {
         method: "GET",
         headers: {
-          "content-type": "application/json",
-          autorization: `Bearer ${at}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${at}`,
         },
       })
         .then((res) => res.json())
-        .then((res: { data: Exercise[] }) =>
-          setExercise(res.data.filter((e) => !e.deletedAt))
+        .then((res: { data: User[] }) =>
+          setInstructors(
+            res.data.filter((e) => e.role === "INSTRUCTOR" && !e.deletedAt)
+          )
         );
     });
   };
 
   return (
-    <div className="w-32 h-24 flex flex-col gap-1 rounded-md p-2 bg-dark">
+    <div className=" h-24 flex items-center justify-between  gap-10 rounded-md py-2 px-4 bg-dark">
       <div className="flex flex-col space-y-1 ">
         <h1 className="w-full  font-medium rounded-md text-white text-center">
           {data.name}
         </h1>
         <p className="w-full h-6 font-light text-sm  text-white/50 text-center  ">
-          {data.description}
+          {data.hash}
         </p>
       </div>
-      <div className="w-full flex justify-around  pb-4 text-center ">
-        <button className=" flex justify-center items-center w-fit p-1 hover:bg-opacity-80  rounded-md ">
-          <Pencil2Icon color="#EB1D63" className=" w-5 h-5" />
-        </button>
+      <div className="w-full flex items-center h-full  pb-4 text-center ">
         <button
           onClick={(e) => {
             e.preventDefault();
-            handleRemove(data.id);
+            handleDelete(data.id);
           }}
           className=" flex justify-center items-center w-fit p-1   rounded-md "
         >

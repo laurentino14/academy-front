@@ -1,9 +1,5 @@
 "use client";
-<<<<<<< HEAD
-import CardExercise from "@/components/ui/card-exercises";
-=======
 import { CardExercise } from "@/components/ui/card-exercises";
->>>>>>> 2e9644b33f8c2d62bbbb66b37d470305914887bf
 import { Input } from "@/components/ui/input";
 import { Exercise } from "@/models/exercise";
 import { env } from "@/utils/env";
@@ -23,11 +19,9 @@ export default function Page() {
         },
       })
         .then((res) => res.json())
-<<<<<<< HEAD
-        .then((res: { data: Exercise[] }) => setExercise(res.data.filter(e => !e.deletedAt)));
-=======
-        .then((res) => setExercise(res.data));
->>>>>>> 2e9644b33f8c2d62bbbb66b37d470305914887bf
+        .then((res: { data: Exercise[] }) =>
+          setExercise(res.data.filter((e) => !e.deletedAt))
+        );
     }
     t();
   }, []);
@@ -44,11 +38,7 @@ export default function Page() {
       <div className="w-full flex flex-wrap justify-between sm:justify-normal gap-2 ">
         {exercise &&
           exercise.map((e, i) => {
-<<<<<<< HEAD
             return <CardExercise key={i} data={e} setExercise={setExercise} />;
-=======
-            return <CardExercise key={i} data={e} />;
->>>>>>> 2e9644b33f8c2d62bbbb66b37d470305914887bf
           })}
       </div>
     </div>
