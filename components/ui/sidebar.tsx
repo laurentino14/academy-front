@@ -30,20 +30,28 @@ export function Sidebar() {
             </div>
           )}
           {user?.role === "ADMIN" && (
-            <>
-              <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
-                123
-              </Button>
-              <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
-                123
-              </Button>
-              <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
-                123
-              </Button>
-              <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
-                123
-              </Button>
-            </>
+            <div className="flex    flex-col space-y-4">
+              <Link passHref href="/app/instructors">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Instrutores
+                </Button>
+              </Link>
+              <Link passHref href="/app/instructors/new">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Promover instrutor
+                </Button>
+              </Link>
+              <Link passHref href="/app/machines">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Equipamentos
+                </Button>
+              </Link>
+              <Link passHref href="/app/machines/new">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Adicionar equipamento
+                </Button>
+              </Link>
+            </div>
           )}
           {user?.role === "INSTRUCTOR" && (
             <div className="flex flex-col space-y-4">
