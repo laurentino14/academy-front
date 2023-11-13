@@ -2,6 +2,7 @@ import { Exercise } from "@/models/exercise";
 import { env } from "@/utils/env";
 import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 import cookies from "js-cookie";
+<<<<<<< HEAD
 import { Dispatch, SetStateAction } from "react";
 
 export default function CardExercise({
@@ -21,7 +22,7 @@ export default function CardExercise({
         authorization: `Bearer ${at}`,
       },
     }).finally(async () => {
-      await fetch(env.api + `/exercise`, {
+      await fetch(env.api + `/exercise`, {git 
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -35,6 +36,18 @@ export default function CardExercise({
           )
         );
     });
+=======
+
+export function CardExercise({ data }: { data: Exercise }) {
+  const handleRemove = async (id: string) => {
+    await fetch(env.api + ` /exercise/${id} `, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${cookies}`,
+      },
+    }).then();
+>>>>>>> 2e9644b33f8c2d62bbbb66b37d470305914887bf
   };
 
   return (
