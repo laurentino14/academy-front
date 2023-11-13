@@ -6,5 +6,6 @@ export abstract class Exercise {
   abstract description?: string; // Exercicio de peitop apapapapaoskdioasjdoiasjodiajsnmuiodnjasiodkasiodj
   abstract createdAt: Date;
   abstract updatedAt: Date;
+  abstract deletedAt?: Date | undefined | null;
   abstract Sets?: Set[];
 }
