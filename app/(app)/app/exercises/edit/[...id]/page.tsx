@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { Exercise } from "@/models/exercise";
 import { env } from "@/utils/env";
+import cookies from "js-cookie";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import cookies from "js-cookie";
 
 type IForm = {
   id: string;
@@ -16,7 +16,7 @@ type IForm = {
 
 export default function Page() {
   const params = useParams();
-  const id = params.id[0] as string;
+  const id = params.id as string;
   const [exercise, setExercise] = useState<Exercise>();
 
   const router = useRouter();
@@ -99,7 +99,7 @@ export default function Page() {
                   type="text"
                 />
                 <Button intent="primary" type="submit">
-                  Atualizar Exercicio
+                  Atualizar exercício
                 </Button>
               </form>
             </FormProvider>
