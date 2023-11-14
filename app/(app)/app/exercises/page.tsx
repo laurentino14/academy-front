@@ -1,5 +1,5 @@
 "use client";
-import CardExercise from "@/components/ui/card-exercises";
+import { CardExercise } from "@/components/ui/card-exercises";
 import { Input } from "@/components/ui/input";
 import { Exercise } from "@/models/exercise";
 import { env } from "@/utils/env";
@@ -21,7 +21,7 @@ export default function Page() {
         .then((res) => res.json())
         .then((res: { data: Exercise[] }) =>
           setExercise(res.data.filter((e) => !e.deletedAt))
-        )
+        );
     }
     t();
   }, []);

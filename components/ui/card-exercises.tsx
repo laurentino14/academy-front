@@ -2,10 +2,10 @@ import { Exercise } from "@/models/exercise";
 import { env } from "@/utils/env";
 import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 import cookies from "js-cookie";
+import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
-import Link from 'next/link';
 
-export default function CardExercise({
+export function CardExercise({
   data,
   setExercise,
 }: {
@@ -25,7 +25,7 @@ export default function CardExercise({
       await fetch(env.api + `/exercise`, {
         method: "GET",
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json",
           authorization: `Bearer ${at}`,
         },
       })
@@ -35,9 +35,6 @@ export default function CardExercise({
         );
     });
   };
-
-
-
 
   return (
     <div className="w-32 h-24 flex flex-col gap-1 rounded-md p-2 bg-dark">
@@ -50,13 +47,21 @@ export default function CardExercise({
         </p>
       </div>
       <div className="w-full flex justify-around  pb-4 text-center ">
-
-        <Link href={`app/exercises/edit/${data.id}`}
+        <Link
+          href={`/app/exercises/edit/${data.id}`}
           className=" flex justify-center items-center w-fit p-1 hover:bg-opacity-80  rounded-md "
         >
-          
           <Pencil2Icon color="#EB1D63" className=" w-5 h-5" />
         </Link>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            handleRemove(data.id);
+          }}
+          className=" flex justify-center items-center w-fit p-1   rounded-md "
+        >
+          <TrashIcon color="#EB1D63" className=" w-5 h-5" />{" "}
+        </button>
       </div>
     </div>
   );
