@@ -26,7 +26,7 @@ export default function CardExercise({
         method: "GET",
         headers: {
           "content-type": "application/json",
-          autorization: `Bearer ${at}`,
+          authorization: `Bearer ${at}`,
         },
       })
         .then((res) => res.json())
@@ -36,22 +36,6 @@ export default function CardExercise({
     });
   };
 
-  const handleUpdate = async (
-    input:{ name?: string, description?: string}
-  ) => {
-    const at = cookies.get("at");
-
-    await fetch(env.api + `/exercise/${data.id}`, {
-      method: "PATCH",
-      body: JSON.stringify({...input}),
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${at}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((res: { data: Exercise[] }) => setExercise(res.data));
-  };
 
 
 
@@ -73,15 +57,6 @@ export default function CardExercise({
           
           <Pencil2Icon color="#EB1D63" className=" w-5 h-5" />
         </Link>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleRemove(data.id);
-          }}
-          className=" flex justify-center items-center w-fit p-1   rounded-md "
-        >
-          <TrashIcon color="#EB1D63" className=" w-5 h-5" />{" "}
-        </button>
       </div>
     </div>
   );

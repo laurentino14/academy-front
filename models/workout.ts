@@ -10,6 +10,7 @@ export abstract class Workout {
   abstract userId: string;
   abstract instructor: User;
   abstract instructorId: string;
+  abstract deletedAt: Date;
   abstract createdAt: Date;
   abstract updatedAt: Date;
 }
