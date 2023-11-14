@@ -46,7 +46,7 @@ export function CardInstructors({
           {data.hash}
         </p>
       </div>
-      <div className=" flex items-center h-full   text-center ">
+      <div className=" flex items-center h-full    text-center ">
         <button
           onClick={(e) => {
             e.preventDefault();
