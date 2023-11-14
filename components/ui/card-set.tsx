@@ -1,7 +1,7 @@
 "use client";
 import { SetModel } from "@/models/set";
 import { env } from "@/utils/env";
-import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { CheckCircledIcon, StarIcon } from "@radix-ui/react-icons";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
@@ -45,7 +45,7 @@ export function CardSet({
       )}
     >
       <h1
-        className={clsx("font-medium text-xl ", {
+        className={clsx("font-medium text-xl mt-2 ", {
           "text-white": !mFinished,
           "text-primary": mFinished,
         })}
@@ -54,7 +54,16 @@ export function CardSet({
       </h1>
       <AnimatePresence mode="wait">
         {mFinished && (
-          <CheckCircledIcon className="text-primary accent-primary stroke-primary stroke-1 fill-primary w-24 h-24" />
+          <div className="w-full flex flex-col items-center space-y-6">
+            <CheckCircledIcon className="text-primary accent-primary stroke-primary stroke-1 fill-primary w-24 h-24" />
+            <div className="flex space-x-2 ">
+              <button ><StarIcon className=" h-8 w-8"/></button>
+              <button ><StarIcon className=" h-8 w-8"/></button>
+              <button ><StarIcon className=" h-8 w-8"/></button>
+              <button ><StarIcon className=" h-8 w-8"/></button>
+              <button ><StarIcon className=" h-8 w-8"/></button>
+            </div>
+          </div>
         )}
         {mFinished && <div></div>}
         {!mFinished && (
