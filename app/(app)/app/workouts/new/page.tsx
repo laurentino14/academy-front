@@ -11,6 +11,7 @@ import cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { AuthContext } from "../../../../../contexts/auth";
+import { useRouter } from "next/navigation";
 type IForm = {
   name: string;
   active: boolean;
@@ -27,6 +28,7 @@ type IFormParsed = {
 };
 
 export default function Page() {
+  const router = useRouter();
   const { user } = useContext(AuthContext);
   const methods = useForm<IForm>({
     mode: "onChange",
@@ -59,7 +61,10 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() => methods.reset({}));
+      .then(() => methods.reset({}))
+      .finally( () => {
+        router.push("/app/workouts");
+      })
   };
 
   const { append, fields, remove } = useFieldArray({
