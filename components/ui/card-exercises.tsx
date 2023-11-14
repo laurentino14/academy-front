@@ -2,8 +2,8 @@ import { Exercise } from "@/models/exercise";
 import { env } from "@/utils/env";
 import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 import cookies from "js-cookie";
-<<<<<<< HEAD
 import { Dispatch, SetStateAction } from "react";
+import Link from 'next/link';
 
 export default function CardExercise({
   data,
@@ -22,7 +22,7 @@ export default function CardExercise({
         authorization: `Bearer ${at}`,
       },
     }).finally(async () => {
-      await fetch(env.api + `/exercise`, {git 
+      await fetch(env.api + `/exercise`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -30,25 +30,30 @@ export default function CardExercise({
         },
       })
         .then((res) => res.json())
-        .then((res: {data: Exercise[]}) =>
-          setExercise(
-            res.data.filter((e => !e.deletedAt))
-          )
+        .then((res: { data: Exercise[] }) =>
+          setExercise(res.data.filter((e) => !e.deletedAt))
         );
     });
-=======
+  };
 
-export function CardExercise({ data }: { data: Exercise }) {
-  const handleRemove = async (id: string) => {
-    await fetch(env.api + ` /exercise/${id} `, {
-      method: "DELETE",
+  const handleUpdate = async (
+    input:{ name?: string, description?: string}
+  ) => {
+    const at = cookies.get("at");
+
+    await fetch(env.api + `/exercise/${data.id}`, {
+      method: "PATCH",
+      body: JSON.stringify({...input}),
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${cookies}`,
+        authorization: `Bearer ${at}`,
       },
-    }).then();
->>>>>>> 2e9644b33f8c2d62bbbb66b37d470305914887bf
+    })
+      .then((res) => res.json())
+      .then((res: { data: Exercise[] }) => setExercise(res.data));
   };
+
+
 
   return (
     <div className="w-32 h-24 flex flex-col gap-1 rounded-md p-2 bg-dark">
@@ -61,9 +66,13 @@ export function CardExercise({ data }: { data: Exercise }) {
         </p>
       </div>
       <div className="w-full flex justify-around  pb-4 text-center ">
-        <button className=" flex justify-center items-center w-fit p-1 hover:bg-opacity-80  rounded-md ">
+
+        <Link href={`/app/exercises/edit/${data.id}`}
+          className=" flex justify-center items-center w-fit p-1 hover:bg-opacity-80  rounded-md "
+        >
+          
           <Pencil2Icon color="#EB1D63" className=" w-5 h-5" />
-        </button>
+        </Link>
         <button
           onClick={(e) => {
             e.preventDefault();

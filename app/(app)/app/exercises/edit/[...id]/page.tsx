@@ -26,5 +26,12 @@ export default function Page() {
 
     getExercise();
   }, [params.id]);
-  return <div className="text-9xl">{params.id}</div>;
+
+
+  return <div className="text-9xl">
+    {params.id}
+    
+    
+    
+    </div>;
 }
