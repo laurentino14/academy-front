@@ -72,7 +72,7 @@ export default function Page() {
       .then( () => methods.reset({ name: '', description: '' } ))
       .finally(
         () => {
-          router.push('/app/exercises')
+          router.push('/app/exercises' )
         }
       )       
   };

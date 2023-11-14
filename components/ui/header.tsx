@@ -113,7 +113,7 @@ export const Header = () => {
                 Cadastro de treino
               </Button>
             </Link>
-            <Link passHref href="/app/exercises/list-training-all">
+            <Link passHref href="/app/workouts">
               <Button
                 onClick={(e) => setOpen(!open)}
                 className="w-full !bg-gray1 text-white hover:bg-opacity-80 "

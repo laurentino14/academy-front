@@ -67,7 +67,7 @@ export default function CardExercise({
       </div>
       <div className="w-full flex justify-around  pb-4 text-center ">
 
-        <Link href={`/app/exercises/edit/${data.id}`}
+        <Link href={`app/exercises/edit/${data.id}`}
           className=" flex justify-center items-center w-fit p-1 hover:bg-opacity-80  rounded-md "
         >
           

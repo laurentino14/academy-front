@@ -9,6 +9,8 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
+
+
 export default function Page() {
   const { user } = useContext(AuthContext);
   const [workouts, setWorkouts] = useState<Workout[]>();

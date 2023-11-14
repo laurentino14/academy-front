@@ -263,18 +263,6 @@ export default function Page() {
                           type="number"
                         />
                       </div>
-                      <div className="w-full flex justify-between gap-4">
-                        <InputForm
-                          name={`sets.${i}.series`}
-                          className=" text-center w-full rounded-md bg-primary"
-                          type="number"
-                        />
-                        <InputForm
-                          name={`sets.${i}.reps`}
-                          className=" text-center w-full rounded-md bg-primary"
-                          type="number"
-                        />
-                      </div>
                     </div>
                   </div>
                 );

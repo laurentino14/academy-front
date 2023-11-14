@@ -62,7 +62,7 @@ export function Sidebar() {
               </Link>
               <Link passHref href="/app/exercises/new">
                 <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
-                  Cadastrar exercicios
+                  Cadastrar exercícios
                 </Button>
               </Link>
               <Link passHref href="/app/exercises/listing">
@@ -75,7 +75,7 @@ export function Sidebar() {
                   Cadastro de treino
                 </Button>
               </Link>
-              <Link passHref href="/app/exercises/list-training-all">
+              <Link passHref href="/app/workouts">
                 <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
                   Listar todos os treinos
                 </Button>
