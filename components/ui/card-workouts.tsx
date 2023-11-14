@@ -84,20 +84,22 @@ export function WorkoutCard({
         {/* 'BACK' | 'CHEST' | 'LEGS' | 'SHOULDERS' | 'ARMS' | 'ABS'; */}
         <div className="w-full  flex  items-center gap-2 ">
           <ul className="flex h-full w-full flex-col gap-5   flex-1  ">
-            <ul className="space-y-2 flex flex-col">
-              <h1 className="font-medium text-sm  w-full  text-opacity-70 ">
-                Domingo
-              </h1>
-              <div className="flex gap-5 flex-wrap  ">
-                {workout?.sets
-                  ?.sort((a, b) => b.type.length - a.type.length)
-                  .map((set, i) => {
-                    if (set.day === "SUNDAY") {
-                      return <SetLi key={i} set={set} />;
-                    }
-                  })}
-              </div>
-            </ul>
+            {workout?.sets.filter((set) => set.day === "SUNDAY").length > 0 && (
+              <ul className="space-y-2 flex flex-col">
+                <h1 className="font-medium text-sm  w-full  text-opacity-70 ">
+                  Domingo
+                </h1>
+                <div className="flex gap-5 flex-wrap  ">
+                  {workout?.sets
+                    ?.sort((a, b) => b.type.length - a.type.length)
+                    .map((set, i) => {
+                      if (set.day === "SUNDAY") {
+                        return <SetLi key={i} set={set} />;
+                      }
+                    })}
+                </div>
+              </ul>
+            )}
             <ul className="space-y-2 flex  flex-col">
               <h1 className="font-medium text-sm  w-full text-opacity-70 ">
                 Segunda
