@@ -1,3 +1,4 @@
+import { AuthContext } from "@/contexts/auth";
 import { SetModel } from "@/models/set";
 import { Workout } from "@/models/workout";
 import { env } from "@/utils/env";
@@ -6,12 +7,19 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import cookies from "js-cookie";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-export function WorkoutCard({ workout }: { workout: Workout }) {
+export function WorkoutCard({
+  workout,
+  t,
+  z,
+}: {
+  workout: Workout;
+  t: () => Promise<void>;
+  z: () => Promise<void>;
+}) {
   const [open, setOpen] = useState(false);
-  // const [workouts, setWorkouts] = useState<Workout[]>();
-  // console.log(workout, "workout");
+  const { user } = useContext(AuthContext);
 
   const handleRemove = async (id: string) => {
     const at = cookies.get("at");
@@ -23,16 +31,8 @@ export function WorkoutCard({ workout }: { workout: Workout }) {
         authorization: `Bearer ${at}`,
       },
     }).finally(async () => {
-      await fetch(env.api + `/workout`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${at}`,
-        },
-      }).then((res) => res.json());
-      // .then((res: { data: Workout[] }) =>
-      // setWorkouts(res.data.filter((e) => !e.deletedAt))
-      // );
+      if (user?.role === "INSTRUCTOR") t();
+      else if (user?.role === "USER") z();
     });
   };
 
@@ -45,22 +45,16 @@ export function WorkoutCard({ workout }: { workout: Workout }) {
       className="w-full  overflow-hidden bg-dark/70 rounded-md "
     >
       <div className="w-full flex px-4 bg-dark items-center justify-between h-[4rem]">
-        <Link href={`/app/workouts/edit/${workout.id}`}>
-          <Pencil2Icon />
-        </Link>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleRemove(workout.id);
-          }}
-          className=" flex justify-center items-center w-fit p-1   rounded-md "
-        >
-          <TrashIcon color="#EB1D63" className=" w-5 h-5" />{" "}
-        </button>
-        <h1 className="font-medium">{workout.name}</h1>
+        <div className="flex items-center gap-5">
+          <Link href={`/app/workouts/edit/${workout.id}`}>
+            <Pencil2Icon />
+          </Link>
+
+          <h1 className="font-medium  truncate">{workout.name}</h1>
+        </div>
         <div className="flex gap-5">
-          <div className="text-sm text-end flex flex-col">
-            <h1 className="font-medium">
+          <div className="text-sm text-end flex justify-center flex-col">
+            <h1 className="font-medium hidden lg:block">
               Professor: {workout.instructor.name}
             </h1>
             <h2 className="font-medium text-xs">
@@ -70,9 +64,20 @@ export function WorkoutCard({ workout }: { workout: Workout }) {
                 : new Date().toLocaleDateString("pt-BR")}
             </h2>
           </div>
-          <button onClick={(e) => setOpen(!open)}>
-            <ChevronDownIcon className="scale-150" />
-          </button>
+          <div className="flex gap-4 items-center">
+            <button onClick={(e) => setOpen(!open)}>
+              <ChevronDownIcon className="scale-150" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleRemove(workout.id);
+              }}
+              className=" flex justify-center items-center w-fit p-1   rounded-md "
+            >
+              <TrashIcon color="#EB1D63" className=" w-5 h-5" />{" "}
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex w-full py-4 justify-center gap-10 px-4">
@@ -185,10 +190,11 @@ export function WorkoutCard({ workout }: { workout: Workout }) {
   );
 
   function SetLi({ set }: { set: SetModel }) {
+    console.log(set);
     return (
       <li className="flex max-w-xs w-fit rounded-md  h-10 bg-black/20 px-4 items-center gap-2 justify-between text-sm">
         <div className="flex items-center  gap-5">
-          {/* <h2 className="font-medium ">{set.exercise.name}</h2> */}
+          <h2 className="font-medium ">{set.exercise.name}</h2>
           <span
             className={clsx("text-xs font-semibold  px-2 py-[2px] rounded-md", {
               "text-red-500 bg-black/50": set.type === "ARMS",

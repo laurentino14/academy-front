@@ -102,7 +102,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full px-4 flex items-center justify-center">
+    <div className="min-h-screen w-full py-20 px-4 flex items-center justify-center">
       <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
         <div className="w-full">
           <h1
@@ -131,14 +131,13 @@ export default function Page() {
                   type="text"
                 />
               </div>
-              <InputForm placeholder="Descrição" name="descrição" type="text" />
               {fields.map((fields, i) => {
                 return (
                   <div
-                    className="flex flex-col p-2 border border-gray rounded-md"
+                    className="flex flex-col p-2 border gap-y-7 border-gray rounded-md"
                     key={i}
                   >
-                    <div className="flex mb-4 justify-between">
+                    <div className="flex justify-between">
                       <h2 className="font-bold">Exercicio {i + 1}</h2>
                       <button
                         onClick={(e) => {
@@ -241,22 +240,26 @@ export default function Page() {
                         </select>
                       </div>
                     </div>
-                    <div className="w-full flex justify-between items-center gap-4">
-                      <div className="w-1/2">
-                        <label className="w-full px-1" htmlFor="">
-                          Series
-                        </label>
+                    <div className="flex text-sm -mb-7 justify-between">
+                      <label className="w-full px-1" htmlFor="">
+                        Series
+                      </label>
+                      <label className="w-full px-1 text-end" htmlFor="">
+                        Repetições
+                      </label>
+                    </div>
+                    <div className="w-full h-full flex justify-between items-center gap-2">
+                      <div className="w-1/2 h-full">
                         <InputForm
                           name={`sets.${i}.series`}
                           className=" text-center w-full rounded-md bg-primary"
                           type="number"
                         />
                       </div>
-                      <p className="">X</p>
-                      <div className="w-1/2 text-end">
-                        <label className="w-full px-1" htmlFor="">
-                          Repetições
-                        </label>
+                      <div className="flex text-xs justify-center h-full  items-center">
+                        x
+                      </div>
+                      <div className="w-1/2 text-end h-full">
                         <InputForm
                           name={`sets.${i}.reps`}
                           className=" text-center w-full rounded-md bg-primary"
@@ -288,7 +291,7 @@ export default function Page() {
                 Adicionar exercicio
               </Button>
               <Button intent="primary" type="submit">
-                Cadastrar Treino
+                Cadastrar treino
               </Button>
             </form>
           </FormProvider>
