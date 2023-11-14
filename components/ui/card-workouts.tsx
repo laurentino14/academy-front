@@ -192,7 +192,7 @@ export function WorkoutCard({
   function SetLi({ set }: { set: SetModel }) {
     console.log(set);
     return (
-      <li className="flex max-w-xs w-full rounded-md  h-10 bg-black/20 px-4 items-center gap-2 justify-between text-sm">
+      <li className="flex max-w-[10rem] w-full rounded-md  h-10 bg-black/20 px-4 items-center gap-2 justify-between text-sm">
         <div className="flex items-center  gap-5">
           <h2 className="font-medium truncate ">{set.exercise.name}</h2>
           <span
