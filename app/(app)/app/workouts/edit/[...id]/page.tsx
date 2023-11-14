@@ -55,13 +55,18 @@ export default function Page() {
     workout();
   }, [params.id, methods]);
 
+  const [exercises, setExercises] = useState<Exercise[]>();
+  const [machines, setMachines] = useState<Machine[]>();
+  const [deleteds, setDeleteds] = useState<any[]>([]);
   const submit = async (data: IForm) => {
+    const sets = data.sets;
+    deleteds.forEach((deleted) => sets.push(deleted));
     const payload = {
       id: data.id,
 
       name: data.name,
       active: true,
-      sets: data.sets.map((set, i) => {
+      sets: sets.map((set, i) => {
         return {
           ...set,
           series: Number(set.series),
@@ -95,9 +100,6 @@ export default function Page() {
     name: "sets",
   });
 
-  const [exercises, setExercises] = useState<Exercise[]>();
-  const [machines, setMachines] = useState<Machine[]>();
-
   useEffect(() => {
     async function exercise() {
       const at = cookies.get("at");
@@ -128,6 +130,17 @@ export default function Page() {
     }
     machine();
   }, []);
+
+  async function handleRemove(i: number) {
+    const data = methods.getValues(`sets.${i}`);
+    const payload = {
+      ...data,
+      deletedAt: new Date(),
+    };
+
+    setDeleteds((prev) => [...prev, payload]);
+    remove(i);
+  }
 
   return (
     <div className="min-h-screen w-full py-20 px-4 flex items-center justify-center">
@@ -164,7 +177,7 @@ export default function Page() {
                       <button
                         onClick={(e) => {
                           e.preventDefault();
-                          remove(i);
+                          handleRemove(i);
                         }}
                       >
                         <TrashIcon className=" w-6 h-6" />

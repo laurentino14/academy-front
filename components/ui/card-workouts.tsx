@@ -186,7 +186,8 @@ export function WorkoutCard({
               </ul>
             )}
 
-            {workout?.sets.filter((set) => set.day === "FRIDAY").length > 0 && (
+            {workout?.sets.filter((set) => set.day === "SATURDAY").length >
+              0 && (
               <ul className="space-y-2 flex  flex-col">
                 <h1 className="font-medium text-sm  w-full text-opacity-70 ">
                   Sábado

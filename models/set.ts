@@ -7,6 +7,7 @@ export abstract class Set {
   abstract day: Day;
   abstract machineId: string;
   abstract exerciseId: string;
+
   abstract series: number;
 }
 
@@ -36,5 +37,6 @@ export abstract class SetModel {
   abstract workoutId?: string;
   abstract createdAt: Date | string;
   abstract updatedAt: Date | string;
+  abstract deletedAt?: Date | null | undefined;
   abstract history?: History[];
 }
