@@ -111,7 +111,7 @@ export default function Page() {
       .then((res) => res.json())
       .then((res) => {
         if (res.statusCode !== 200) {
-          return toast.error("Erro ao alterar a senha");
+          return toast.error("Erro ao alterar a senha!");
         }
           toast.success("Senha alterada com sucesso!");
         methodsPassword.reset({
