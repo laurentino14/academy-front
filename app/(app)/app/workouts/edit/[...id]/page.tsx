@@ -51,30 +51,6 @@ export default function Page() {
     },
   });
 
-  useEffect(() => {
-    // async function workout() {
-    //   const at = cookies.get("at");
-    //   await fetch(env.api + `/workout/${params.id}`, {
-    //     method: "GET",
-    //     headers: {
-    //       "content-type": "application/json",
-    //       authorization: "Bearer " + at,
-    //     },
-    //   })
-    //     .then((res) => res.json())
-    //     .then((res) => {
-    //       methods.setValue("id", res.data.id);
-    //       console.log(res, "ressssssss");
-    //       methods.setValue("name", res.data.name);
-    //       methods.setValue("active", res.data.active);
-    //       methods.setValue("sets", res.data.sets);
-    //       methods.setValue("userId", res.data.userId);
-    //       methods.setValue("instructorId", res.data.instructorId);
-    //     });
-    // }
-    // workout();
-  }, [params.id, methods]);
-
   const [exercises, setExercises] = useState<Exercise[]>();
   const [machines, setMachines] = useState<Machine[]>();
   const [deleteds, setDeleteds] = useState<any[]>([]);

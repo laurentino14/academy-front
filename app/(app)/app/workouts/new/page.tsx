@@ -8,10 +8,10 @@ import { env } from "@/utils/env";
 import { TrashIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { AuthContext } from "../../../../../contexts/auth";
-import { useRouter } from "next/navigation";
 type IForm = {
   name: string;
   active: boolean;
@@ -62,9 +62,9 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then(() => methods.reset({}))
-      .finally( () => {
+      .finally(() => {
         router.push("/app/workouts");
-      })
+      });
   };
 
   const { append, fields, remove } = useFieldArray({
@@ -108,7 +108,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen w-full py-20 px-4 flex items-center justify-center">
-      <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
+      <div className="max-w-md w-full flex items-center flex-col border border-black/20 shadow drop-shadow-md  bg-dark rounded-md py-4 px-5 ">
         <div className="w-full">
           <h1
             className={clsx(

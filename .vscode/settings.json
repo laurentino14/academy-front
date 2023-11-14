@@ -1,4 +1,21 @@
-// {
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#ce23b4",
+    "titleBar.activeForeground": "#000000",
+    "titleBar.inactiveBackground": "#ce23b4",
+    "titleBar.inactiveForeground": "#000000",
+    "titleBar.border": "#ce23b4",
+    "activityBar.background": "#ce23b4",
+    "activityBar.foreground": "#000000",
+    "statusBar.background": "#ce23b4",
+    "statusBar.foreground": "#000000",
+    "statusBar.debuggingBackground": "#ce23b4",
+    "statusBar.debuggingForeground": "#000000",
+    "tab.activeBorder": "#ce23b4",
+    "iLoveWorkSpaceColors": true,
+    "iLoveWorkSpaceRandom": false
+  }
+} // {
 //   "workbench.colorCustomizations": {
 //     "titleBar.activeBackground": "#3d11a3",
 //     "titleBar.activeForeground": "#000000",

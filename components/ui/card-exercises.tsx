@@ -37,7 +37,7 @@ export function CardExercise({
   };
 
   return (
-    <div className="w-32 h-24 flex flex-col gap-1 rounded-md p-2 bg-dark">
+    <div className="w-32 h-24 flex flex-col gap-1  rounded-md p-2 bg-dark">
       <div className="flex flex-col space-y-1 ">
         <h1 className="w-full  font-medium rounded-md text-white text-center">
           {data.name}

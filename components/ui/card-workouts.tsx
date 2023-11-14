@@ -42,7 +42,7 @@ export function WorkoutCard({
       animate={{
         height: open ? "auto" : "4rem",
       }}
-      className="w-full  overflow-hidden bg-dark/70 rounded-md "
+      className="w-full border border-black/20 shadow drop-shadow-md  overflow-hidden bg-dark/70 rounded-md "
     >
       <div className="w-full flex px-4 bg-dark items-center justify-between h-[4rem]">
         <div className="flex items-center gap-5">
@@ -222,33 +222,43 @@ export function WorkoutCard({
   function SetLi({ set }: { set: SetModel }) {
     console.log(set);
     return (
-      <li className="flex max-w-[10rem] w-full rounded-md  h-10 bg-black/20 px-4 items-center gap-2 justify-between text-sm">
-        <div className="flex items-center justify-between w-full  gap-5">
-          <h2 className="font-medium truncate ">{set.exercise.name}</h2>
-          <span
-            className={clsx("text-xs font-semibold  px-2 py-[2px] rounded-md", {
-              "text-red-500 bg-black/50": set.type === "ARMS",
-              "text-blue-500 bg-black/50": set.type === "BACK",
-              "text-green-500 bg-black/50": set.type === "LEGS",
-              "text-yellow-500 bg-black/50": set.type === "SHOULDERS",
-              "text-primary bg-black/50 ": set.type === "CHEST",
-              "text-purple-500 bg-black/50": set.type === "ABS",
-            })}
-          >
-            {set.type === "ABS"
-              ? "Abdominal".toUpperCase()
-              : set.type === "ARMS"
-              ? "Braço".toUpperCase()
-              : set.type === "BACK"
-              ? "Costas".toUpperCase()
-              : set.type === "CHEST"
-              ? "Peito".toUpperCase()
-              : set.type === "LEGS"
-              ? "Perna".toUpperCase()
-              : set.type === "SHOULDERS"
-              ? "Ombro".toUpperCase()
-              : "N/A"}
-          </span>
+      <li className="flex max-w-[10rem] w-full rounded-md   bg-white/10 px-4 items-center  justify-between text-sm">
+        <div className="flex items-center flex-col justify-between w-full  py-1 gap-2">
+          <h2 className="font-medium truncate break-keep">
+            {set.exercise.name}
+          </h2>
+          <div className="flex flex-col">
+            <div
+              className={clsx(
+                "text-xs font-semibold flex items-center gap-2  px-2 py-[2px] rounded-md",
+                {
+                  "text-red-500 bg-black/50": set.type === "ARMS",
+                  "text-blue-500 bg-black/50": set.type === "BACK",
+                  "text-green-500 bg-black/50": set.type === "LEGS",
+                  "text-yellow-500 bg-black/50": set.type === "SHOULDERS",
+                  "text-primary bg-black/50 ": set.type === "CHEST",
+                  "text-purple-500 bg-black/50": set.type === "ABS",
+                }
+              )}
+            >
+              {set.type === "ABS"
+                ? "Abdominal".toUpperCase()
+                : set.type === "ARMS"
+                ? "Braço".toUpperCase()
+                : set.type === "BACK"
+                ? "Costas".toUpperCase()
+                : set.type === "CHEST"
+                ? "Peito".toUpperCase()
+                : set.type === "LEGS"
+                ? "Perna".toUpperCase()
+                : set.type === "SHOULDERS"
+                ? "Ombro".toUpperCase()
+                : "N/A"}
+              <span className="text-xs leading-[4px]">
+                {set.series}x{set.reps}
+              </span>
+            </div>
+          </div>
         </div>
       </li>
     );

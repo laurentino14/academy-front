@@ -17,7 +17,7 @@ export default function Page() {
   const submit = async (data: IForm) => {
     const payload: IForm = {
       name: data.name,
-      description: data.description
+      description: data.description,
     };
     const cookie = cookies.get("at");
     await fetch(env.api + "/exercise", {
@@ -29,39 +29,43 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then( () => methods.reset({ name: '', description: '' } )) 
+      .then(() => methods.reset({ name: "", description: "" }));
   };
 
   return (
     <div className="min-h-screen w-full px-4 flex items-center justify-center">
-      <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
+      <div className="max-w-md w-full flex items-center flex-col border border-black/20 shadow drop-shadow-md  bg-dark rounded-md py-4 px-5 ">
         <div className="w-full">
-            <h1 className={clsx(" text-center bg-white  text-gray  w-full font-medium px-3 py-3 rounded-md")}>
-                Novo exercício
-            </h1>
-            <FormProvider {...methods}>
-              <form
-                onSubmit={methods.handleSubmit(submit)}
-                className="flex  w-full space-y-4 mt-10 flex-col"
-              >
-                <div className="space-x-4 w-full">
-                  <InputForm
-                    className="w-full"
-                    placeholder="Nome do exercício"
-                    name="name"
-                    type="text"
-                  />
-                </div>
+          <h1
+            className={clsx(
+              " text-center bg-white  text-gray  w-full font-medium px-3 py-3 rounded-md"
+            )}
+          >
+            Novo exercício
+          </h1>
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(submit)}
+              className="flex  w-full space-y-4 mt-10 flex-col"
+            >
+              <div className="space-x-4 w-full">
                 <InputForm
-                  placeholder="Descrição"
-                  name="description"
+                  className="w-full"
+                  placeholder="Nome do exercício"
+                  name="name"
                   type="text"
                 />
-                <Button intent="primary" type="submit">
-                  Cadastrar 
-                </Button>
-              </form>
-            </FormProvider>
+              </div>
+              <InputForm
+                placeholder="Descrição"
+                name="description"
+                type="text"
+              />
+              <Button intent="primary" type="submit">
+                Cadastrar
+              </Button>
+            </form>
+          </FormProvider>
         </div>
       </div>
     </div>

@@ -91,7 +91,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen px-4 w-full flex items-center justify-center">
-      <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
+      <div className="max-w-md w-full flex items-center flex-col border border-black/20 shadow drop-shadow-md  bg-dark rounded-md py-4 px-5 ">
         <div className="w-full flex flex-nowrap">
           <Button
             onClick={() => setActive(1)}

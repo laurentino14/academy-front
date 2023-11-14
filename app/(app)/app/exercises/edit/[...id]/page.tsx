@@ -75,7 +75,7 @@ export default function Page() {
   return (
     <div className="w-full">
       <div className="min-h-screen w-full px-4 flex items-center justify-center">
-        <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
+        <div className="max-w-md w-full flex items-center flex-col border border-black/20 shadow drop-shadow-md  bg-dark rounded-md py-4 px-5 ">
           <div className="w-full">
             <h1 className=" text-center bg-white  text-gray  w-full font-medium px-3 py-3 rounded-md">
               Editar exercício

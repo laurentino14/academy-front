@@ -26,20 +26,44 @@ export default function Page() {
     t();
   }, []);
 
+  const [filter, setFilter] = useState<string>("");
+
   useEffect(() => {
     console.log(exercise);
   }, [exercise]);
 
   return (
     <div className="w-full min-h-screen  flex flex-col justify-center items-center space-y-4  px-4 py-20 ">
-      <div className="w-full ">
-        <Input placeholder="Filtrar" className="!bg-dark w-full sm:w-auto " />
+      <div className="w-full flex items-center justify-center ">
+        <Input
+          onChange={(e) => setFilter(e.target.value)}
+          placeholder="Buscar exercício"
+          className="!bg-dark w-full sm:max-w-sm "
+        />
       </div>
-      <div className="w-full flex flex-wrap justify-between sm:justify-normal gap-4 ">
-        {exercise &&
+      <div className="w-full flex flex-wrap justify-center gap-4 ">
+        {filter.length === 0 &&
+          exercise &&
           exercise.map((e, i) => {
             return <CardExercise key={i} data={e} setExercise={setExercise} />;
           })}
+        {filter.length > 0 &&
+          exercise &&
+          exercise.map((e, i) => {
+            if (e.name.includes(filter)) {
+              return (
+                <CardExercise key={i} data={e} setExercise={setExercise} />
+              );
+            }
+          })}
+
+        {filter.length > 0 &&
+          exercise &&
+          exercise.filter((e) => e.name.includes(filter)).length === 0 && (
+            <div className="w-full text-center  text-white">
+              Nenhum exercício encontrado
+            </div>
+          )}
       </div>
     </div>
   );
