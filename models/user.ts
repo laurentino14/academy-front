@@ -16,6 +16,7 @@ export type User = {
   password: string;
   createdAt: Date | string;
   updatedAt: Date | string;
+  deletedAt?: Date | null | undefined;
   workouts: Workout[];
   instructorWorkouts: Workout[];
 };

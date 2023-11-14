@@ -1,5 +1,9 @@
 "use client";
+<<<<<<< HEAD
 import CardExercise from "@/components/ui/card-exercises";
+=======
+import { CardExercise } from "@/components/ui/card-exercises";
+>>>>>>> b80fdcdae21bb3993b7cd620366bda80dbd18d19
 import { Input } from "@/components/ui/input";
 import { Exercise } from "@/models/exercise";
 import { env } from "@/utils/env";
@@ -21,7 +25,11 @@ export default function Page() {
         .then((res) => res.json())
         .then((res: { data: Exercise[] }) =>
           setExercise(res.data.filter((e) => !e.deletedAt))
+<<<<<<< HEAD
         )
+=======
+        );
+>>>>>>> b80fdcdae21bb3993b7cd620366bda80dbd18d19
     }
     t();
   }, []);
