@@ -86,7 +86,7 @@ export const Header = () => {
                 onClick={(e) => setOpen(!open)}
                 className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
               >
-                Exercicios
+                Exercícios
               </Button>
             </Link>
             <Link passHref href="/app/exercises/new">
@@ -94,7 +94,7 @@ export const Header = () => {
                 onClick={(e) => setOpen(!open)}
                 className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
               >
-                Cadastrar exercicios
+                Cadastrar exercícios
               </Button>
             </Link>
 
@@ -115,6 +115,42 @@ export const Header = () => {
               </Button>
             </Link>
           </>
+        )}
+        {user?.role === "ADMIN" && (
+          <div className="flex    flex-col space-y-4">
+            <Link passHref href="/app/instructors">
+              <Button
+                onClick={(e) => setOpen(!open)}
+                className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
+              >
+                Instrutores
+              </Button>
+            </Link>
+            <Link passHref href="/app/instructors/new">
+              <Button
+                onClick={(e) => setOpen(!open)}
+                className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
+              >
+                Promover instrutor
+              </Button>
+            </Link>
+            <Link passHref href="/app/machines">
+              <Button
+                onClick={(e) => setOpen(!open)}
+                className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
+              >
+                Equipamentos
+              </Button>
+            </Link>
+            <Link passHref href="/app/machines/new">
+              <Button
+                onClick={(e) => setOpen(!open)}
+                className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
+              >
+                Adicionar equipamento
+              </Button>
+            </Link>
+          </div>
         )}
       </div>
       <motion.div
