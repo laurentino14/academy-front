@@ -31,7 +31,7 @@ export default function Page() {
   }, [exercise]);
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center space-y-4  px-4 py-20 ">
+    <div className="w-full min-h-screen  flex flex-col justify-center items-center space-y-4  px-4 py-20 ">
       <div className="w-full ">
         <Input placeholder="Filtrar" className="!bg-dark w-full sm:w-auto " />
       </div>
