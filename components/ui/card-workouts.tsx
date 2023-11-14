@@ -84,7 +84,9 @@ export function WorkoutCard({
         {/* 'BACK' | 'CHEST' | 'LEGS' | 'SHOULDERS' | 'ARMS' | 'ABS'; */}
         <div className="w-full  flex  items-center gap-2 ">
           <ul className="flex h-full w-full flex-col gap-5   flex-1  ">
-            {workout?.sets.filter((set) => set.day === "SUNDAY").length > 0 && (
+            {workout?.sets.filter(
+              (set) => set.day === "SUNDAY" && !set.deletedAt
+            ).length > 0 && (
               <ul className="space-y-2 flex flex-col">
                 <h1 className="font-medium text-sm  w-full  text-opacity-70 ">
                   Domingo
@@ -100,7 +102,9 @@ export function WorkoutCard({
                 </div>
               </ul>
             )}
-            {workout?.sets.filter((set) => set.day === "MONDAY").length > 0 && (
+            {workout?.sets.filter(
+              (set) => set.day === "MONDAY" && !set.deletedAt
+            ).length > 0 && (
               <ul className="space-y-2 flex  flex-col">
                 <h1 className="font-medium text-sm  w-full text-opacity-70 ">
                   Segunda
@@ -116,8 +120,9 @@ export function WorkoutCard({
                 </div>
               </ul>
             )}
-            {workout?.sets.filter((set) => set.day === "TUESDAY").length >
-              0 && (
+            {workout?.sets.filter(
+              (set) => set.day === "TUESDAY" && !set.deletedAt
+            ).length > 0 && (
               <ul className="space-y-2 flex  flex-col">
                 <h1 className="font-medium text-sm  w-full text-opacity-70 ">
                   Terça
@@ -133,8 +138,9 @@ export function WorkoutCard({
                 </div>
               </ul>
             )}
-            {workout?.sets.filter((set) => set.day === "WEDNESDAY").length >
-              0 && (
+            {workout?.sets.filter(
+              (set) => set.day === "WEDNESDAY" && !set.deletedAt
+            ).length > 0 && (
               <ul className="space-y-2 flex  flex-col">
                 <h1 className="font-medium text-sm  w-full text-opacity-70 ">
                   Quarta
@@ -151,8 +157,9 @@ export function WorkoutCard({
               </ul>
             )}
 
-            {workout?.sets.filter((set) => set.day === "THURSDAY").length >
-              0 && (
+            {workout?.sets.filter(
+              (set) => set.day === "THURSDAY" && !set.deletedAt
+            ).length > 0 && (
               <ul className="space-y-2 flex  flex-col">
                 <h1 className="font-medium text-sm  w-full text-opacity-70 ">
                   Quinta
@@ -169,7 +176,9 @@ export function WorkoutCard({
               </ul>
             )}
 
-            {workout?.sets.filter((set) => set.day === "FRIDAY").length > 0 && (
+            {workout?.sets.filter(
+              (set) => set.day === "FRIDAY" && !set.deletedAt
+            ).length > 0 && (
               <ul className="space-y-2 flex  flex-col">
                 <h1 className="font-medium text-sm  w-full text-opacity-70 ">
                   Sexta
@@ -186,8 +195,9 @@ export function WorkoutCard({
               </ul>
             )}
 
-            {workout?.sets.filter((set) => set.day === "SATURDAY").length >
-              0 && (
+            {workout?.sets.filter(
+              (set) => set.day === "SATURDAY" && !set.deletedAt
+            ).length > 0 && (
               <ul className="space-y-2 flex  flex-col">
                 <h1 className="font-medium text-sm  w-full text-opacity-70 ">
                   Sábado

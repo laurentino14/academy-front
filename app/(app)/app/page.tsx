@@ -33,7 +33,7 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then((res) => {
-        setSets(res.data);
+        setSets(res.data.filter((set: SetModel) => !set.deletedAt));
       });
   }
   useEffect(
@@ -43,6 +43,10 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [user]
   );
+
+  useEffect(() => {
+    console.log(sets);
+  }, [sets]);
 
   return (
     <div className="w-full flex-col flex space-y-10 min-h-full py-20 px-10 justify-center">
@@ -54,11 +58,12 @@ export default function Page() {
           <div className="flex justify-center sm:justify-between lg:justify-normal items-center flex-wrap gap-5 lg:gap-10 ">
             {sets &&
               sets.map((set, i) => {
+                console.log(sets);
                 const find = user.history.find(
                   (h) =>
                     h.setId === set.id &&
                     new Date(h.createdAt).toDateString() ===
-                      new Date().toDateString()
+                      new Date(set.createdAt).toDateString()
                 );
 
                 if (find) {
