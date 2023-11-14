@@ -4,10 +4,14 @@ import { InputForm } from "@/components/ui/input";
 import { env } from "@/utils/env";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function Page() {
+
+  const router = useRouter();
+
   const [steps, setSteps] = useState(1);
   const [code, setCode] = useState<number>();
   const methods = useForm<{ email: string }>({
@@ -77,7 +81,10 @@ export default function Page() {
           "Content-Type": "application/json",
           "access-control-allow-origin": "*",
         },
-      });
+      })
+      .finally(() => {
+        router.push("/");
+      } )
     }
   };
 

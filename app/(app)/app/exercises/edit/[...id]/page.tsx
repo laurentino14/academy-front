@@ -99,7 +99,7 @@ export default function Page() {
                   type="text"
                 />
                 <Button intent="primary" type="submit">
-                  Cadastrar
+                  Atualizar Exercicio
                 </Button>
               </form>
             </FormProvider>
