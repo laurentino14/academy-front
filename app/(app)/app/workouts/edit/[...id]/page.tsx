@@ -66,6 +66,7 @@ export default function Page() {
           ...set,
           series: Number(set.series),
           reps: Number(set.reps),
+          weight: Number(set.weight),
         };
       }),
 
@@ -262,16 +263,29 @@ export default function Page() {
                       </div>
                     </div>
                     <div className="flex text-sm -mb-7 justify-between">
-                      <label className="w-full px-1" htmlFor="">
+                      <label
+                        className="w-full px-1  "
+                        htmlFor={`input-series-${i}`}
+                      >
                         Series
                       </label>
-                      <label className="w-full px-1 text-end" htmlFor="">
+                      <label
+                        className="w-full px-1 text-center"
+                        htmlFor={`input-reps-${i}`}
+                      >
                         Repetições
+                      </label>
+                      <label
+                        className="w-full px-1 text-end"
+                        htmlFor={`input-weight-${i}`}
+                      >
+                        Carga
                       </label>
                     </div>
                     <div className="w-full h-full flex justify-between items-center gap-2">
                       <div className="w-1/2 h-full">
                         <InputForm
+                          id={`input-series-${i}`}
                           name={`sets.${i}.series`}
                           className=" text-center w-full rounded-md bg-primary"
                           type="number"
@@ -282,9 +296,24 @@ export default function Page() {
                       </div>
                       <div className="w-1/2 text-end h-full">
                         <InputForm
+                          id={`input-reps-${i}`}
                           name={`sets.${i}.reps`}
                           className=" text-center w-full rounded-md bg-primary"
                           type="number"
+                        />
+                      </div>
+                      <div className="flex text-xs justify-center h-full  items-center">
+                        /
+                      </div>
+
+                      <div className="w-1/2 text-end h-full">
+                        <InputForm
+                          disabled={user?.role !== "USER" ? true : false}
+                          id={`input-weight-${i}`}
+                          name={`sets.${i}.weight`}
+                          className=" text-center placeholder:text-white w-full rounded-md bg-primary"
+                          type="number"
+                          placeholder="0 Kg"
                         />
                       </div>
                     </div>
