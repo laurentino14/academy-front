@@ -20,15 +20,17 @@ export default function Page() {
       })
         .then((res) => res.json())
         .then((res: { data: User[] }) =>
-          setInstructors(res.data.filter((e) => e.role === "INSTRUCTOR" && !e.deletedAt))
+          setInstructors(
+            res.data.filter((e) => e.role === "INSTRUCTOR" && !e.deletedAt)
+          )
         );
     }
     t();
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="flex items-center w-full gap-10 justify-center">
+    <div className="min-h-screen flex items-center px-4 justify-center">
+      <div className="flex items-center flex-wrap w-full gap-10 justify-center">
         {instructors &&
           instructors.map((e, i) => {
             return (
