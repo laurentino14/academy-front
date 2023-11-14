@@ -193,7 +193,7 @@ export function WorkoutCard({
     console.log(set);
     return (
       <li className="flex max-w-[10rem] w-full rounded-md  h-10 bg-black/20 px-4 items-center gap-2 justify-between text-sm">
-        <div className="flex items-center  gap-5">
+        <div className="flex items-center justify-between w-full  gap-5">
           <h2 className="font-medium truncate ">{set.exercise.name}</h2>
           <span
             className={clsx("text-xs font-semibold  px-2 py-[2px] rounded-md", {
