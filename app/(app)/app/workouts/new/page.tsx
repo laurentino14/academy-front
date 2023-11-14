@@ -210,7 +210,8 @@ export default function Page() {
                         <select
                           className="w-1/2 text-center h-8 appearance-none px-4 rounded-md bg-primary"
                           placeholder="Exercício"
-                          {...methods.register(`sets.${i}.exerciseId`)}>
+                          {...methods.register(`sets.${i}.exerciseId`)}
+                        >
                           {exercises &&
                             exercises?.map((exercise, i) => {
                               return (
@@ -239,16 +240,29 @@ export default function Page() {
                             })}
                         </select>
                       </div>
-                      <div className="w-full flex justify-between items-center gap-4">
-                        <div className="w-1/2">
-                          <label className="w-full px-1" htmlFor="">Series</label>
-                          <InputForm name={`sets.${i}.series`} className=" text-center w-full rounded-md bg-primary" type="number"  />
-                        </div>
-                        <p className="">X</p>
-                        <div className="w-1/2 text-end">
-                          <label className="w-full px-1" htmlFor="">Repetições</label>
-                          <InputForm name={`sets.${i}.reps`} className=" text-center w-full rounded-md bg-primary" type="number"  />
-                        </div>
+                    </div>
+                    <div className="w-full flex justify-between items-center gap-4">
+                      <div className="w-1/2">
+                        <label className="w-full px-1" htmlFor="">
+                          Series
+                        </label>
+                        <InputForm
+                          name={`sets.${i}.series`}
+                          className=" text-center w-full rounded-md bg-primary"
+                          type="number"
+                        />
+                      </div>
+                      <p className="">X</p>
+                      <div className="w-1/2 text-end">
+                        <label className="w-full px-1" htmlFor="">
+                          Repetições
+                        </label>
+                        <InputForm
+                          name={`sets.${i}.reps`}
+                          className=" text-center w-full rounded-md bg-primary"
+                          type="number"
+                        />
+                      </div>
                       <div className="w-full flex justify-between gap-4">
                         <InputForm
                           name={`sets.${i}.series`}
@@ -263,13 +277,15 @@ export default function Page() {
                       </div>
                     </div>
                   </div>
+                );
+              })}
               <Button
                 onClick={(e) => {
                   e.preventDefault();
                   append({
                     day: "MONDAY",
                     machineId:
-                    machines && machines.length !== 0 ? machines[0].id : "",
+                      machines && machines.length !== 0 ? machines[0].id : "",
                     type: "CHEST",
                     exerciseId: exercises![0].id,
                     reps: 0,
@@ -280,7 +296,7 @@ export default function Page() {
                   " text-center !bg-gray1 text-white  hover:bg-opacity-80 w-full font-medium px-3 py-3 rounded-md"
                 )}
                 type="submit"
-                >
+              >
                 Adicionar exercicio
               </Button>
               <Button intent="primary" type="submit">
