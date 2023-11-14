@@ -35,7 +35,7 @@ export default function Page() {
       <div className="w-full ">
         <Input placeholder="Filtrar" className="!bg-dark w-full sm:w-auto " />
       </div>
-      <div className="w-full flex flex-wrap justify-between sm:justify-normal gap-2 ">
+      <div className="w-full flex flex-wrap justify-between sm:justify-normal gap-4 ">
         {exercise &&
           exercise.map((e, i) => {
             return <CardExercise key={i} data={e} setExercise={setExercise} />;
