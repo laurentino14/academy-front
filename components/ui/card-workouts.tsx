@@ -100,91 +100,108 @@ export function WorkoutCard({
                 </div>
               </ul>
             )}
-            <ul className="space-y-2 flex  flex-col">
-              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
-                Segunda
-              </h1>
-              <div className="flex gap-5 flex-wrap  ">
-                {workout?.sets
-                  ?.sort((a, b) => b.type.length - a.type.length)
-                  .map((set, i) => {
-                    if (set.day === "MONDAY") {
-                      return <SetLi key={i} set={set} />;
-                    }
-                  })}
-              </div>
-            </ul>
-            <ul className="space-y-2 flex  flex-col">
-              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
-                Terça
-              </h1>
-              <div className="flex gap-5 flex-wrap  ">
-                {workout?.sets
-                  ?.sort((a, b) => b.type.length - a.type.length)
-                  .map((set, i) => {
-                    if (set.day === "TUESDAY") {
-                      return <SetLi key={i} set={set} />;
-                    }
-                  })}
-              </div>
-            </ul>
-            <ul className="space-y-2 flex  flex-col">
-              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
-                Quarta
-              </h1>
-              <div className="flex gap-5 flex-wrap  ">
-                {workout?.sets
-                  ?.sort((a, b) => b.type.length - a.type.length)
-                  .map((set, i) => {
-                    if (set.day === "WEDNESDAY") {
-                      return <SetLi key={i} set={set} />;
-                    }
-                  })}
-              </div>
-            </ul>
+            {workout?.sets.filter((set) => set.day === "MONDAY").length > 0 && (
+              <ul className="space-y-2 flex  flex-col">
+                <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                  Segunda
+                </h1>
+                <div className="flex gap-5 flex-wrap  ">
+                  {workout?.sets
+                    ?.sort((a, b) => b.type.length - a.type.length)
+                    .map((set, i) => {
+                      if (set.day === "MONDAY") {
+                        return <SetLi key={i} set={set} />;
+                      }
+                    })}
+                </div>
+              </ul>
+            )}
+            {workout?.sets.filter((set) => set.day === "TUESDAY").length >
+              0 && (
+              <ul className="space-y-2 flex  flex-col">
+                <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                  Terça
+                </h1>
+                <div className="flex gap-5 flex-wrap  ">
+                  {workout?.sets
+                    ?.sort((a, b) => b.type.length - a.type.length)
+                    .map((set, i) => {
+                      if (set.day === "TUESDAY") {
+                        return <SetLi key={i} set={set} />;
+                      }
+                    })}
+                </div>
+              </ul>
+            )}
+            {workout?.sets.filter((set) => set.day === "WEDNESDAY").length >
+              0 && (
+              <ul className="space-y-2 flex  flex-col">
+                <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                  Quarta
+                </h1>
+                <div className="flex gap-5 flex-wrap  ">
+                  {workout?.sets
+                    ?.sort((a, b) => b.type.length - a.type.length)
+                    .map((set, i) => {
+                      if (set.day === "WEDNESDAY") {
+                        return <SetLi key={i} set={set} />;
+                      }
+                    })}
+                </div>
+              </ul>
+            )}
 
-            <ul className="space-y-2 flex  flex-col">
-              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
-                Quinta
-              </h1>
-              <div className="flex gap-5 flex-wrap  ">
-                {workout?.sets
-                  ?.sort((a, b) => b.type.length - a.type.length)
-                  .map((set, i) => {
-                    if (set.day === "THURSDAY") {
-                      return <SetLi key={i} set={set} />;
-                    }
-                  })}
-              </div>
-            </ul>
-            <ul className="space-y-2 flex  flex-col">
-              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
-                Sexta
-              </h1>
-              <div className="flex gap-5 flex-wrap  ">
-                {workout?.sets
-                  ?.sort((a, b) => b.type.length - a.type.length)
-                  .map((set, i) => {
-                    if (set.day === "FRIDAY") {
-                      return <SetLi key={i} set={set} />;
-                    }
-                  })}
-              </div>
-            </ul>
-            <ul className="space-y-2 flex  flex-col">
-              <h1 className="font-medium text-sm  w-full text-opacity-70 ">
-                Sábado
-              </h1>
-              <div className="flex gap-5 flex-wrap  ">
-                {workout?.sets
-                  ?.sort((a, b) => b.type.length - a.type.length)
-                  .map((set, i) => {
-                    if (set.day === "SATURDAY") {
-                      return <SetLi key={i} set={set} />;
-                    }
-                  })}
-              </div>
-            </ul>
+            {workout?.sets.filter((set) => set.day === "THURSDAY").length >
+              0 && (
+              <ul className="space-y-2 flex  flex-col">
+                <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                  Quinta
+                </h1>
+                <div className="flex gap-5 flex-wrap  ">
+                  {workout?.sets
+                    ?.sort((a, b) => b.type.length - a.type.length)
+                    .map((set, i) => {
+                      if (set.day === "THURSDAY") {
+                        return <SetLi key={i} set={set} />;
+                      }
+                    })}
+                </div>
+              </ul>
+            )}
+
+            {workout?.sets.filter((set) => set.day === "FRIDAY").length > 0 && (
+              <ul className="space-y-2 flex  flex-col">
+                <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                  Sexta
+                </h1>
+                <div className="flex gap-5 flex-wrap  ">
+                  {workout?.sets
+                    ?.sort((a, b) => b.type.length - a.type.length)
+                    .map((set, i) => {
+                      if (set.day === "FRIDAY") {
+                        return <SetLi key={i} set={set} />;
+                      }
+                    })}
+                </div>
+              </ul>
+            )}
+
+            {workout?.sets.filter((set) => set.day === "FRIDAY").length > 0 && (
+              <ul className="space-y-2 flex  flex-col">
+                <h1 className="font-medium text-sm  w-full text-opacity-70 ">
+                  Sábado
+                </h1>
+                <div className="flex gap-5 flex-wrap  ">
+                  {workout?.sets
+                    ?.sort((a, b) => b.type.length - a.type.length)
+                    .map((set, i) => {
+                      if (set.day === "SATURDAY") {
+                        return <SetLi key={i} set={set} />;
+                      }
+                    })}
+                </div>
+              </ul>
+            )}
           </ul>
         </div>
       </div>
