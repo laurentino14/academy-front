@@ -192,9 +192,9 @@ export function WorkoutCard({
   function SetLi({ set }: { set: SetModel }) {
     console.log(set);
     return (
-      <li className="flex max-w-xs w-fit rounded-md  h-10 bg-black/20 px-4 items-center gap-2 justify-between text-sm">
+      <li className="flex max-w-xs w-full rounded-md  h-10 bg-black/20 px-4 items-center gap-2 justify-between text-sm">
         <div className="flex items-center  gap-5">
-          <h2 className="font-medium ">{set.exercise.name}</h2>
+          <h2 className="font-medium truncate ">{set.exercise.name}</h2>
           <span
             className={clsx("text-xs font-semibold  px-2 py-[2px] rounded-md", {
               "text-red-500 bg-black/50": set.type === "ARMS",
