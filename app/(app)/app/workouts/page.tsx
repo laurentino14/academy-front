@@ -10,13 +10,27 @@ import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 
-
 export default function Page() {
   const { user } = useContext(AuthContext);
   const [workouts, setWorkouts] = useState<Workout[]>();
 
   useEffect(() => {
     const t = async function () {
+      const at = cookies.get("at");
+      await fetch(env.api + `/workout/instructor/${user!.id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "access-control-allow-origin": "*",
+          authorization: `Bearer ${at}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setWorkouts(res.data);
+        });
+    };
+    const z = async function () {
       const at = cookies.get("at");
       await fetch(env.api + `/workout/user/${user!.id}`, {
         method: "GET",
@@ -32,6 +46,7 @@ export default function Page() {
         });
     };
     if (user && user.role === "INSTRUCTOR") t();
+    else if (user && user.role === "USER") z();
   }, [user]);
   return (
     <div className="flex flex-col w-full py-20 lg:px-20 sm:px-10 px-4">
@@ -40,7 +55,7 @@ export default function Page() {
         <AnimatePresence mode="popLayout">
           {workouts &&
             workouts.map((workout, i) => {
-              return <WorkoutCard key={i} workout={workout} data={workout} />;
+              return <WorkoutCard key={i} workout={workout} />;
             })}
         </AnimatePresence>
       </motion.div>

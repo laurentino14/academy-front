@@ -33,7 +33,10 @@ export default function Home() {
             <InputForm name="email" type="email" placeholder="E-mail" />
             <InputForm name="password" type="password" placeholder="Senha" />
           </div>
-          <Link className="font-medium mt-4 w-full text-left text-sm" href="/">
+          <Link
+            className="font-medium mt-4 w-full text-left text-sm"
+            href="/forgotpassword"
+          >
             Esqueci minha senha
           </Link>
           <Button type="submit" className="mt-4 w-full">
