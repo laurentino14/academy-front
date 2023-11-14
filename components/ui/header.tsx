@@ -97,12 +97,13 @@ export const Header = () => {
                 Cadastrar exercicios
               </Button>
             </Link>
-            <Link passHref href="/app/exercises/listing">
+
+            <Link passHref href="/app/workouts">
               <Button
                 onClick={(e) => setOpen(!open)}
                 className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
               >
-                Listagem de exercicios
+                Treinos
               </Button>
             </Link>
             <Link passHref href="/app/workouts/new">
@@ -110,15 +111,7 @@ export const Header = () => {
                 onClick={(e) => setOpen(!open)}
                 className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
               >
-                Cadastro de treino
-              </Button>
-            </Link>
-            <Link passHref href="/app/workouts">
-              <Button
-                onClick={(e) => setOpen(!open)}
-                className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
-              >
-                Listar todos os treinos
+                Cadastrar treino
               </Button>
             </Link>
           </>
