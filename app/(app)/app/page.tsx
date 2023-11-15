@@ -89,10 +89,10 @@ export default function Page() {
   }
   useEffect(() => {
     toast.success("Bem vindo(a) ao Bodyworks!");
-    toast.error("Bem vindo(a) ao Bodyworks!");
-    toast.warning("Bem vindo(a) ao Bodyworks!");
-    toast.info("Bem vindo(a) ao Bodyworks!");
-    toast.update("Bem vindo(a) ao Bodyworks!");
+    // toast.error("Bem vindo(a) ao Bodyworks!");
+    // toast.warning("Bem vindo(a) ao Bodyworks!");
+    // toast.info("Bem vindo(a) ao Bodyworks!");
+    // toast.update("Bem vindo(a) ao Bodyworks!");
   }, []);
 
   const DT = memo(Hour);

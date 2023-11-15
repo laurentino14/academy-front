@@ -5,6 +5,7 @@ import { env } from "@/utils/env";
 import clsx from "clsx";
 import cookies from "js-cookie";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 type IForm = {
   name: string;
   description?: string;
@@ -15,21 +16,30 @@ export default function Page() {
   });
 
   const submit = async (data: IForm) => {
-    const payload: IForm = {
-      name: data.name,
-      description: data.description,
-    };
-    const cookie = cookies.get("at");
-    await fetch(env.api + "/exercise", {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${cookie}`,
-      },
-    })
+
+    try{
+        const payload: IForm = {
+          name: data.name,
+        description: data.description,
+      };
+      const cookie = cookies.get("at");
+      await fetch(env.api + "/exercise", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${cookie}`,
+        },
+      })
       .then((res) => res.json())
-      .then(() => methods.reset({ name: "", description: "" }));
+      .then((res) => { 
+        if(res.data.statusCode !== 201) throw new Error ("Erro na requisiçao") 
+        methods.reset({ name: "", description: "" })
+      })
+    } catch(err){
+    toast.error("Erro ao cadastrar o exercício!")
+  }
+   
   };
 
   return (

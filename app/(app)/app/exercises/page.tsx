@@ -53,7 +53,7 @@ export default function Page() {
             if (e.name.includes(filter)) {
               return (
                 <CardExercise key={i} data={e} setExercise={setExercise} />
-              );
+              )
             }
           })}
 

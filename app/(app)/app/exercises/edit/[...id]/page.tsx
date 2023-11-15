@@ -7,6 +7,7 @@ import cookies from "js-cookie";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type IForm = {
   id: string;
@@ -68,6 +69,7 @@ export default function Page() {
       .then((res) => res.json())
       .then(() => methods.reset({ name: "", description: "" }))
       .finally(() => {
+        toast.success("Exercicio Atualizado");
         router.push("/app/exercises");
       });
   };

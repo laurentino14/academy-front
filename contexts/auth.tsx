@@ -4,6 +4,7 @@ import { env } from "@/utils/env";
 import cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { ReactNode, createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 export type ISignUpData = {
   role: "ADMIN" | "INSTRUCTOR" | "USER";
   doc: string;
@@ -30,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>();
 
   async function signIn(data: { email: string; password: string }) {
-    try {
+    try{
       await fetch(env.api + "/auth", {
         method: "POST",
         headers: {
@@ -42,7 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .then((res) => res.json())
         .then((res) => {
           if (res.statusCode === 400 || res.statusCode === 500) {
-            throw new Error("Usuário ou senha incorretos");
+            throw new Error ("Dados invalidos" )
           }
           setUser(res.data.user);
           cookies.set("rt", res.data.refreshToken, {
@@ -51,8 +52,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           cookies.set("at", res.data.accessToken, { expires: 60 * 60 });
           router.push("/app");
         });
-    } catch (err) {
-      console.log(err);
+    }catch (err){
+      toast.error("Dados incorretos!" )
+
     }
   }
 
@@ -80,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(res.data.user);
         });
     } catch (err) {
-      console.log(err, "err");
+      toast.error("Token Atualizado")
     }
   }
 
@@ -108,7 +110,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             cookies.remove("at");
           }
           if (res.statusCode === 400 || res.statusCode === 500) {
-            throw new Error(res.data);
+            throw new Error ("Dados já cadastrados")
           }
 
           console.log(res.statusCode);
@@ -122,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           router.push("/app");
         });
     } catch (err) {
-      console.log(err);
+      toast.error("Dados já cadastrados")
     }
   }
 
