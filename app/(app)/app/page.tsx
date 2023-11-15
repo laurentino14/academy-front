@@ -133,7 +133,7 @@ export default function Page() {
         <>
           {/* INSTRUCTOR */}
 
-          <div className="flex flex-col justify-center items-center ">
+          <div className="min-h-screen pb-36 flex flex-col justify-center items-center ">
             <Image
               className=""
               src="/assets/logoAdmInst.png"
