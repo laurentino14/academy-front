@@ -5,7 +5,9 @@ import { env } from "@/utils/env";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence } from "framer-motion";
 import cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 type IForm = {
   name: string;
@@ -19,6 +21,8 @@ export default function Page() {
     resolver: zodResolver(schema),
   });
 
+  const router = useRouter();
+
   const submit = async (data: IForm) => {
     const cookie = cookies.get("at");
     await fetch(env.api + `/machine`, {
@@ -31,7 +35,14 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() => methods.reset({ name: "" }));
+      .then((res) => {
+        if (res.statusCode !== 201) {
+          toast.error("Erro ao cadastrar o equipamento!");
+        }
+        toast.success("Equipamento cadastrado com sucesso!");
+        methods.reset({ name: "" });
+        router.push("/app/machines");
+      });
   };
 
   return (

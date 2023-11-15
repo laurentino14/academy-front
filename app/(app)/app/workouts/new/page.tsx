@@ -11,6 +11,7 @@ import cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 import { AuthContext } from "../../../../../contexts/auth";
 
@@ -62,8 +63,12 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() => methods.reset({}))
-      .finally(() => {
+      .then((res) => {
+        if (res.statusCode !== 201) {
+          return toast.error("Erro ao cadastrar o treino!");
+        }
+        toast.success("Treino cadastrado com sucesso!");
+        methods.reset({});
         router.push("/app/workouts");
       });
   };

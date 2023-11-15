@@ -7,11 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
+import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
-
 const schema = z.object({
   id: z.string(),
   name: z.string().min(1, "Nome inválido!").optional(),
@@ -42,6 +42,7 @@ const schemaPassword = z
 type IFormPassword = z.infer<typeof schemaPassword>;
 export default function Page() {
   const { user, setUser } = useContext(AuthContext);
+  const router = useRouter();
   const methods = useForm<IForm>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -75,11 +76,12 @@ export default function Page() {
       .then((res) => res.json())
       .then((res) => {
         if (res.statusCode !== 200) {
-          return toast.error("Dados invalidos!");
+          return toast.error("Erro ao atualizar os dados!");
         }
-
+        toast.success("Dados atualizados com sucesso!");
         setUser(res.data);
         methods.reset({ id: user?.id, password: "" });
+        router.push("/app");
       });
   };
   const methodsPassword = useForm<IFormPassword>({
@@ -111,12 +113,14 @@ export default function Page() {
         if (res.statusCode !== 200) {
           return toast.error("Erro ao atualizar a senha!");
         }
+        toast.success("Senha atualizada com sucesso!");
         methodsPassword.reset({
           id: user?.id,
           oldPassword: "",
           password: "",
           passwordConfirmation: "",
         });
+        router.push("/app");
       })
       .catch((err) => toast.error("Erro ao atualizar a senha!"));
   }
