@@ -8,7 +8,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
 import Image from "next/image";
 import { memo, useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 const days = [
   "SUNDAY",
@@ -87,13 +86,6 @@ export default function Page() {
     }, [date]);
     return <>{date}</>;
   }
-  useEffect(() => {
-    toast.success("Bem vindo(a) ao Bodyworks!");
-    // toast.error("Bem vindo(a) ao Bodyworks!");
-    // toast.warning("Bem vindo(a) ao Bodyworks!");
-    // toast.info("Bem vindo(a) ao Bodyworks!");
-    // toast.update("Bem vindo(a) ao Bodyworks!");
-  }, []);
 
   const DT = memo(Hour);
 
