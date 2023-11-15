@@ -14,6 +14,7 @@ export type ISignUpData = {
   password: string;
 };
 export type IAuthContext = {
+  refreshToken: () => Promise<void>;
   user: User | undefined;
   signIn: (data: { email: string; password: string }) => Promise<void>;
   signOut: () => Promise<void>;
@@ -83,10 +84,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   async function signOut() {
     setUser(undefined);
     cookies.remove("rt");
@@ -145,7 +142,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, signUp, setUser }}>
+    <AuthContext.Provider
+      value={{ user, signIn, signOut, signUp, setUser, refreshToken }}
+    >
       {children}
     </AuthContext.Provider>
   );

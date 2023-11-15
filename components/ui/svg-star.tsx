@@ -1,8 +1,9 @@
 "use client";
+import { AuthContext } from "@/contexts/auth";
 import { env } from "@/utils/env";
 import { motion } from "framer-motion";
 import cookies from "js-cookie";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 
 export const SVGStar = ({
   stars,
@@ -15,6 +16,7 @@ export const SVGStar = ({
   id: string;
   setStars: Dispatch<SetStateAction<number>>;
 }) => {
+  const { refreshToken } = useContext(AuthContext);
   return (
     <motion.svg
       onClick={async (e) => {
@@ -30,6 +32,7 @@ export const SVGStar = ({
               authorization: `Bearer ${at}`,
             },
           });
+          await refreshToken();
         } else {
           setStars(index);
           const at = cookies.get("at");
@@ -41,6 +44,7 @@ export const SVGStar = ({
               authorization: `Bearer ${at}`,
             },
           });
+          await refreshToken();
         }
       }}
       layout

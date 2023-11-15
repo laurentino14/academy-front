@@ -1,4 +1,5 @@
 import { Exercise } from "./exercise";
+import { Workout } from "./workout";
 
 export abstract class Set {
   abstract reps: number;
@@ -34,6 +35,7 @@ export abstract class SetModel {
   abstract exercise: Exercise;
 
   abstract exerciseId: string;
+  abstract workout?: Workout;
   abstract workoutId?: string;
   abstract createdAt: Date | string;
   abstract updatedAt: Date | string;

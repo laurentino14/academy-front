@@ -1,4 +1,5 @@
 "use client";
+import { AuthContext } from "@/contexts/auth";
 import { History } from "@/models/history";
 import { SetModel } from "@/models/set";
 import { env } from "@/utils/env";
@@ -6,7 +7,7 @@ import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "./button";
 import { SVGStar } from "./svg-star";
 export function CardSet({
@@ -39,6 +40,7 @@ export function CardSet({
   const [mFinished, setMFinished] = useState(finished);
 
   const [stars, setStars] = useState(0);
+  const { refreshToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (history) {
@@ -134,6 +136,7 @@ export function CardSet({
                 e.preventDefault();
                 handleSet();
                 setMFinished(true);
+                refreshToken();
               }}
               intent="white"
               className="w-full"
