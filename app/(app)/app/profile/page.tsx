@@ -109,7 +109,7 @@ export default function Page() {
       .then((res) => res.json())
       .then((res) => {
         if (res.statusCode !== 200) {
-          return toast.error("Invalido");
+          return toast.error("Erro ao atualizar a senha!");
         }
         methodsPassword.reset({
           id: user?.id,

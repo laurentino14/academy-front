@@ -41,6 +41,9 @@ export default function Page() {
           return toast.error("Erro ao atualizar o equipamento!");
         }
         router.push("/app/machines");
+      })
+      .catch((err) => {
+        return toast.error("Erro ao atualizar o equipamento!");
       });
   }
   return (

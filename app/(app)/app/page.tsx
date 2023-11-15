@@ -135,11 +135,11 @@ export default function Page() {
 
           <div className="flex flex-col justify-center items-center ">
             <Image
-              className="lg:hidden md:hidden"
+              className=""
               src="/assets/logo.png"
               alt="logo"
-              width={600}
-              height={600}
+              width={500}
+              height={500}
               quality={100}
             />
             <h1 className="font-bold">Aqui você é a inspiração!</h1>
@@ -151,7 +151,18 @@ export default function Page() {
         </>
       )}
 
-      {user?.role === "ADMIN" && <>{/* ADMIN */}</>}
+      {user?.role === "ADMIN" && (
+        <div className="flex flex-col justify-center items-center">
+          <Image
+            className=""
+            src="/assets/logo.png"
+            alt="logo"
+            width={600}
+            height={600}
+            quality={100}
+          />
+        </div>
+      )}
     </div>
   );
 }
