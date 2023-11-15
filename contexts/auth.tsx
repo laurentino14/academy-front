@@ -4,15 +4,22 @@ import { env } from "@/utils/env";
 import cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { ReactNode, createContext, useEffect, useState } from "react";
-export type ISignUpData = {
-  role: "ADMIN" | "INSTRUCTOR" | "USER";
-  doc: string;
-  name: string;
-  email: string;
-  gender: string;
-  birthdate: string;
-  password: string;
-};
+import { z } from "zod";
+
+export const schemaSignUp = z.object({
+  role: z.enum(["ADMIN", "INSTRUCTOR", "USER"]),
+  doc: z.string().min(11, "CPF inválido!"),
+  name: z.string().min(1, "Nome inválido!"),
+  email: z.string().email("E-mail inválido!"),
+  gender: z
+    .string()
+    .refine((v) => v !== "GENERO", { message: "Selecione um gênero!" }),
+  birthdate: z.string().refine((v) => v !== "", { message: "Data inválida!" }),
+  password: z.string().min(3, "Senha muito curta!"),
+});
+
+export type ISignUpData = z.infer<typeof schemaSignUp>;
+
 export type IAuthContext = {
   refreshToken: () => Promise<void>;
   user: User | undefined;
