@@ -2,18 +2,23 @@
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { AuthContext } from "@/contexts/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useContext } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-
+import { z } from "zod";
 export default function Home() {
   const { signIn } = useContext(AuthContext);
 
-  type SignInData = {
-    email: string;
-    password: string;
-  };
+  const schema = z.object({
+    email: z.string().email("E-mail inválido!"),
+    password: z.string().min(3, "Senha muito curta!"),
+  });
+
+  type SignInData = z.infer<typeof schema>;
+
   const methods = useForm<SignInData>({
+    resolver: zodResolver(schema),
     defaultValues: {
       email: "",
       password: "",
@@ -29,9 +34,21 @@ export default function Home() {
         >
           <div className="w-full bg-center h-52 bg-cover bg-no-repeat bg-[url(/assets/logo.png)]  lg:hidden" />
           <h1 className="text-2xl font-medium text-white">Seja bem-vindo!</h1>
-          <div className="flex mt-10 w-full flex-col gap-4">
-            <InputForm name="email" type="email" placeholder="E-mail" />
-            <InputForm name="password" type="password" placeholder="Senha" />
+          <div className="flex mt-10 w-full flex-col gap-2">
+            <div className="flex flex-col h-16">
+              <InputForm name="email" type="email" placeholder="E-mail" />
+              <span className="text-sm">
+                {methods.formState.errors.email &&
+                  methods.formState.errors.email.message}
+              </span>
+            </div>
+            <div className="flex flex-col h-16">
+              <InputForm name="password" type="password" placeholder="Senha" />
+              <span className="text-sm">
+                {methods.formState.errors.password &&
+                  methods.formState.errors.password.message}
+              </span>
+            </div>
           </div>
           <Link
             className="font-medium mt-4 w-full text-left text-sm"

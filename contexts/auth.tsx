@@ -5,15 +5,21 @@ import cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-export type ISignUpData = {
-  role: "ADMIN" | "INSTRUCTOR" | "USER";
-  doc: string;
-  name: string;
-  email: string;
-  gender: string;
-  birthdate: string;
-  password: string;
-};
+import { z } from "zod";
+
+export const schemaSignUp = z.object({
+  role: z.enum(["ADMIN", "INSTRUCTOR", "USER"]),
+  doc: z.string().min(11, "CPF inválido!"),
+  name: z.string().min(1, "Nome inválido!"),
+  email: z.string().email("E-mail inválido!"),
+  gender: z
+    .string()
+    .refine((v) => v !== "GENERO", { message: "Selecione um gênero!" }),
+  birthdate: z.string().refine((v) => v !== "", { message: "Data inválida!" }),
+  password: z.string().min(3, "Senha muito curta!"),
+});
+
+export type ISignUpData = z.infer<typeof schemaSignUp>;
 export type IAuthContext = {
   refreshToken: () => Promise<void>;
   user: User | undefined;
@@ -31,7 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>();
 
   async function signIn(data: { email: string; password: string }) {
-    try{
+    try {
       await fetch(env.api + "/auth", {
         method: "POST",
         headers: {
@@ -43,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .then((res) => res.json())
         .then((res) => {
           if (res.statusCode === 400 || res.statusCode === 500) {
-            throw new Error ("Dados invalidos" )
+            throw new Error("Dados invalidos");
           }
           setUser(res.data.user);
           cookies.set("rt", res.data.refreshToken, {
@@ -52,9 +58,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           cookies.set("at", res.data.accessToken, { expires: 60 * 60 });
           router.push("/app");
         });
-    }catch (err){
-      toast.error("Dados incorretos!" )
-
+    } catch (err) {
+      toast.error("Dados incorretos!");
     }
   }
 
@@ -82,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(res.data.user);
         });
     } catch (err) {
-      toast.error("Token Atualizado")
+      toast.error("Token Atualizado");
     }
   }
 
@@ -110,7 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             cookies.remove("at");
           }
           if (res.statusCode === 400 || res.statusCode === 500) {
-            throw new Error ("Dados já cadastrados")
+            throw new Error("Dados já cadastrados");
           }
 
           console.log(res.statusCode);
@@ -124,7 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           router.push("/app");
         });
     } catch (err) {
-      toast.error("Dados já cadastrados")
+      toast.error("Dados já cadastrados");
     }
   }
 

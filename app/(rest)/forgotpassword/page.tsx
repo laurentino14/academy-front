@@ -2,40 +2,55 @@
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { env } from "@/utils/env";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-
+import { z } from "zod";
 export default function Page() {
-
   const router = useRouter();
 
   const [steps, setSteps] = useState(1);
   const [code, setCode] = useState<number>();
+  const schema1 = z.object({
+    email: z.string().email("E-mail inválido!"),
+  });
   const methods = useForm<{ email: string }>({
-    mode: "onChange",
+    resolver: zodResolver(schema1),
     defaultValues: {
       email: "",
     },
   });
 
+  const schema2 = z.object({
+    code: z
+      .string()
+      .refine((v) => Number(v) === code, { message: "Código inválido!" }),
+  });
   const methods2 = useForm<{
     code: number;
   }>({
-    mode: "onChange",
-    defaultValues: {
-      code: undefined,
-    },
+    resolver: zodResolver(schema2),
   });
 
+  const schema3 = z
+    .object({
+      email: z.string().email("E-mail inválido!"),
+      password: z.string().min(3, "Senha muito curta!"),
+      confirmPassword: z.string().min(3, "Senha muito curta!"),
+    })
+    .refine(({ password, confirmPassword }) => password === confirmPassword, {
+      path: ["confirmPassword"],
+      message: "As senhas não conferem!",
+    });
   const methods3 = useForm<{
     email: string;
     password: string;
     confirmPassword: string;
   }>({
-    mode: "onChange",
+    resolver: zodResolver(schema3),
   });
 
   const submit = async (data: { email: string }) => {
@@ -81,10 +96,9 @@ export default function Page() {
           "Content-Type": "application/json",
           "access-control-allow-origin": "*",
         },
-      })
-      .finally(() => {
+      }).finally(() => {
         router.push("/");
-      } )
+      });
     }
   };
 
@@ -162,12 +176,16 @@ export default function Page() {
                   onSubmit={methods.handleSubmit(submit)}
                   className="flex flex-col items-center max-w-xs w-full"
                 >
-                  <div className="flex mt-10 w-full flex-col gap-4">
+                  <div className="flex mt-10 w-full h-14 flex-col">
                     <InputForm
                       name="email"
                       type="email"
                       placeholder="Digite o seu e-mail"
                     />
+                    <span className="text-sm">
+                      {methods.formState.errors.email &&
+                        methods.formState.errors.email.message}
+                    </span>
                   </div>
 
                   <Button type="submit" className="mt-4 w-full">
@@ -207,12 +225,18 @@ export default function Page() {
                   onSubmit={methods2.handleSubmit(submit2)}
                   className="flex flex-col items-center max-w-xs w-full gap-4"
                 >
-                  <InputForm
-                    type="number"
-                    className="w-full"
-                    name="code"
-                    placeholder="Digite o código de acesso"
-                  />
+                  <div className="flex flex-col w-full">
+                    <InputForm
+                      type="number"
+                      className="w-full"
+                      name="code"
+                      placeholder="Digite o código de acesso"
+                    />
+                    <span className="text-sm">
+                      {methods2.formState.errors.code &&
+                        methods2.formState.errors.code.message}
+                    </span>
+                  </div>
                   <Button className="w-full" type="submit">
                     Avançar
                   </Button>
@@ -241,18 +265,30 @@ export default function Page() {
                   onSubmit={methods3.handleSubmit(submit3)}
                   className="flex flex-col items-center max-w-xs w-full gap-4"
                 >
-                  <InputForm
-                    type="password"
-                    name="password"
-                    className="w-full"
-                    placeholder="Digite a nova senha"
-                  />
-                  <InputForm
-                    type="password"
-                    className="w-full"
-                    name="confirmPassword"
-                    placeholder="Confirme a nova senha"
-                  />
+                  <div className="h-14 w-full flex flex-col">
+                    <InputForm
+                      type="password"
+                      name="password"
+                      className="w-full"
+                      placeholder="Digite a nova senha"
+                    />
+                    <span className="text-sm">
+                      {methods3.formState.errors.password &&
+                        methods3.formState.errors.password.message}
+                    </span>
+                  </div>
+                  <div className="h-14 w-full flex flex-col">
+                    <InputForm
+                      type="password"
+                      className="w-full"
+                      name="confirmPassword"
+                      placeholder="Confirme a nova senha"
+                    />
+                    <span className="text-sm">
+                      {methods3.formState.errors.confirmPassword &&
+                        methods3.formState.errors.confirmPassword.message}
+                    </span>
+                  </div>
                   <Button type="submit" className="w-full ">
                     Alterar senha
                   </Button>
