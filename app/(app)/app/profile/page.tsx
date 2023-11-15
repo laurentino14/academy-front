@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 type IForm = {
   id: string;
   name?: string;
