@@ -136,7 +136,7 @@ export default function Page() {
           <div className="flex flex-col justify-center items-center ">
             <Image
               className=""
-              src="/assets/logo.png"
+              src="/assets/logoAdmInst.png"
               alt="logo"
               width={500}
               height={500}
