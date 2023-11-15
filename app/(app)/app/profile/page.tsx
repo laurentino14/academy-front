@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 const schema = z.object({
@@ -72,8 +73,14 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then((res) => setUser(res.data))
-      .then(() => methods.reset({ id: user?.id, password: "" }));
+      .then((res) => {
+        if (res.statusCode !== 200) {
+          return toast.error("Dados invalidos!");
+        }
+
+        setUser(res.data);
+        methods.reset({ id: user?.id, password: "" });
+      });
   };
   const methodsPassword = useForm<IFormPassword>({
     resolver: zodResolver(schemaPassword),
@@ -89,25 +96,29 @@ export default function Page() {
   }, [user, methodsPassword]);
 
   async function submitPassword(data: IFormPassword) {
+    const at = cookies.get;
     await fetch(env.api + "/user/password", {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
         "access-control-allow-origin": "*",
-        authorization: `Bearer ${cookies.get("at")}`,
+        authorization: `Bearer ${at}`,
       },
     })
       .then((res) => res.json())
-      .then(() =>
+      .then((res) => {
+        if (res.statusCode !== 200) {
+          return toast.error("Invalido");
+        }
         methodsPassword.reset({
           id: user?.id,
           oldPassword: "",
           password: "",
           passwordConfirmation: "",
-        })
-      )
-      .catch((err) => console.log(err));
+        });
+      })
+      .catch((err) => toast.error("Erro ao atualizar a senha!"));
   }
   const [active, setActive] = useState(1);
 
