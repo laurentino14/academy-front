@@ -38,8 +38,11 @@ export default function Page() {
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res.data.statusCode !== 201)
-            throw new Error("Erro na requisiçao");
+          if (res.data.statusCode !== 201) {
+            return toast.error("Erro ao cadastrar o exercício!");
+          }
+          toast.success("Exercício cadastrado com sucesso!");
+
           methods.reset({ name: "", description: "" });
         });
     } catch (err) {

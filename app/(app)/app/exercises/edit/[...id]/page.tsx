@@ -67,10 +67,15 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() => methods.reset({ name: "", description: "" }))
-      .finally(() => {
-        toast.success("Exercicio Atualizado");
+      .then((res) => {
+        if (res.statusCode !== 200) {
+          return toast.error("Erro ao cadastrar exercício!");
+        }
+        methods.reset({ name: "", description: "" });
         router.push("/app/exercises");
+      })
+      .catch((err) => {
+        return toast.error("Erro ao cadastrar exercício!");
       });
   };
 
