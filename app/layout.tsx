@@ -2,9 +2,9 @@ import { AppProvider } from "@/contexts/app";
 import { AuthProvider } from "@/contexts/auth";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import Head from "next/head";
-
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -28,6 +28,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${roboto.variable}`}>
       <body>
+        <ToastContainer
+          closeOnClick
+          // toastClassName="flex w-fit h-20 !bg-white"
+          theme="dark"
+          position="bottom-right"
+          draggable
+          newestOnTop={true}
+        />
         <AuthProvider>
           <AppProvider>{children}</AppProvider>
         </AuthProvider>
