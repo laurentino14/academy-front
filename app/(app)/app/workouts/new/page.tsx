@@ -3,58 +3,59 @@ import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { Exercise } from "@/models/exercise";
 import { Machine } from "@/models/machine";
-import { Set } from "@/models/set";
 import { env } from "@/utils/env";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { TrashIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { z } from "zod";
 import { AuthContext } from "../../../../../contexts/auth";
-type IForm = {
-  name: string;
-  active: boolean;
-  sets: Set[];
-  userId: number;
-  instructorId: string;
-};
-type IFormParsed = {
-  name: string;
-  active: boolean;
-  sets: Set[];
-  userId: string;
-  instructorId: string;
-};
 
 export default function Page() {
   const router = useRouter();
   const { user } = useContext(AuthContext);
+  const schema = z.object({
+    name: z.string().min(1, "O campo precisa ter no mínimo 1 caracter!"),
+    active: z.boolean().default(true),
+    sets: z.array(
+      z.object({
+        day: z.enum([
+          "SUNDAY",
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+        ]),
+        machineId: z.string(),
+        type: z.enum(["CHEST", "BACK", "LEGS", "SHOULDERS", "ARMS", "ABS"]),
+        exerciseId: z.string(),
+        reps: z.coerce.number(),
+        series: z.coerce.number(),
+      })
+    ),
+    userId: z.coerce
+      .number()
+      .min(1, "O campo precisa ter no mínimo 1 caracter!")
+      .transform((data) => String(data)),
+    instructorId: z.string(),
+  });
+
+  type IForm = z.infer<typeof schema>;
   const methods = useForm<IForm>({
-    mode: "onChange",
+    resolver: zodResolver(schema),
     defaultValues: { active: true, instructorId: user?.id },
   });
 
   const submit = async (data: IForm) => {
-    const payload: IFormParsed = {
-      name: data.name,
-      active: true,
-      sets: data.sets.map((set, i) => {
-        return {
-          ...set,
-          series: Number(set.series),
-          reps: Number(set.reps),
-        };
-      }),
-
-      userId: String(data.userId),
-      instructorId: user!.id,
-    };
-
     const cookie = cookies.get("at");
     await fetch(env.api + "/workout", {
       method: "POST",
-      body: JSON.stringify(payload),
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${cookie}`,
@@ -122,19 +123,29 @@ export default function Page() {
               onSubmit={methods.handleSubmit(submit)}
               className="flex   w-full space-y-4 mt-10 flex-col"
             >
-              <InputForm
-                className="w-full"
-                type="number"
-                name="userId"
-                placeholder="Digite o código do usuário"
-              />
-              <div className="space-x-4  w-full">
+              <div className="w-full h-14 flex flex-col">
+                <InputForm
+                  className="w-full"
+                  type="number"
+                  name="userId"
+                  placeholder="Digite o código do usuário"
+                />
+                <span className="text-sm">
+                  {methods.formState.errors.userId &&
+                    methods.formState.errors.userId.message}
+                </span>
+              </div>
+              <div className="flex flex-col h-14  w-full">
                 <InputForm
                   className="w-full"
                   placeholder="Nome do treino"
                   name="name"
                   type="text"
                 />
+                <span className="text-sm">
+                  {methods.formState.errors.name &&
+                    methods.formState.errors.name.message}
+                </span>
               </div>
               {fields.map((fields, i) => {
                 return (

@@ -3,24 +3,24 @@ import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { AuthContext } from "@/contexts/auth";
 import { env } from "@/utils/env";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
 type IForm = {
   hash: string;
 };
 
-type IFormPassword = {
-  id: string;
-  oldPassword: string;
-  password: string;
-  passwordConfirmation: string;
-};
 export default function Page() {
   const { user, setUser } = useContext(AuthContext);
+  const schema = z.object({
+    hash: z.coerce.number().min(1, "O campo precisa ter no mínimo 1 caracter!"),
+  });
+  type IForm = z.infer<typeof schema>;
   const methods = useForm<IForm>({
-    mode: "onChange",
+    resolver: zodResolver(schema),
   });
 
   const submit = async (data: IForm) => {
@@ -35,7 +35,7 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() => methods.reset({ hash: "" }));
+      .then(() => methods.reset({ hash: undefined }));
   };
 
   return (
@@ -49,13 +49,17 @@ export default function Page() {
                   onSubmit={methods.handleSubmit(submit)}
                   className="flex  w-full space-y-4  flex-col"
                 >
-                  <div className="space-x-4 w-full">
+                  <div className="flex flex-col h-14 w-full">
                     <InputForm
                       className="w-full"
                       placeholder="Digite o código do usuario"
                       name="hash"
-                      type="text"
+                      type="number"
                     />
+                    <span className="text-sm">
+                      {methods.formState.errors.hash &&
+                        methods.formState.errors.hash.message}
+                    </span>
                   </div>
 
                   <Button intent="primary" type="submit">

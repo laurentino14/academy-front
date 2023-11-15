@@ -2,24 +2,29 @@
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { env } from "@/utils/env";
+import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import cookies from "js-cookie";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { z } from "zod";
 type IForm = {
   name: string;
   description?: string;
 };
 export default function Page() {
+  const schema = z.object({
+    name: z.string().min(1, "O campo precisa ter no mínimo 1 caracter!"),
+    description: z.string().optional(),
+  });
   const methods = useForm<IForm>({
-    mode: "onChange",
+    resolver: zodResolver(schema),
   });
 
   const submit = async (data: IForm) => {
-
-    try{
-        const payload: IForm = {
-          name: data.name,
+    try {
+      const payload: IForm = {
+        name: data.name,
         description: data.description,
       };
       const cookie = cookies.get("at");
@@ -31,15 +36,15 @@ export default function Page() {
           authorization: `Bearer ${cookie}`,
         },
       })
-      .then((res) => res.json())
-      .then((res) => { 
-        if(res.data.statusCode !== 201) throw new Error ("Erro na requisiçao") 
-        methods.reset({ name: "", description: "" })
-      })
-    } catch(err){
-    toast.error("Erro ao cadastrar o exercício!")
-  }
-   
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.data.statusCode !== 201)
+            throw new Error("Erro na requisiçao");
+          methods.reset({ name: "", description: "" });
+        });
+    } catch (err) {
+      toast.error("Erro ao cadastrar o exercício!");
+    }
   };
 
   return (
@@ -58,19 +63,30 @@ export default function Page() {
               onSubmit={methods.handleSubmit(submit)}
               className="flex  w-full space-y-4 mt-10 flex-col"
             >
-              <div className="space-x-4 w-full">
+              <div className="flex flex-col h-14 w-full">
                 <InputForm
                   className="w-full"
                   placeholder="Nome do exercício"
                   name="name"
                   type="text"
                 />
+                <span className="text-sm">
+                  {methods.formState.errors.name &&
+                    methods.formState.errors.name.message}
+                </span>
               </div>
-              <InputForm
-                placeholder="Descrição"
-                name="description"
-                type="text"
-              />
+              <div className="flex flex-col h-14 w-full">
+                <InputForm
+                  className="w-full"
+                  placeholder="Descrição"
+                  name="description"
+                  type="text"
+                />
+                <span className="text-sm">
+                  {methods.formState.errors.description &&
+                    methods.formState.errors.description.message}
+                </span>
+              </div>
               <Button intent="primary" type="submit">
                 Cadastrar
               </Button>

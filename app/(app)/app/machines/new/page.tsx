@@ -2,16 +2,21 @@
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { env } from "@/utils/env";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence } from "framer-motion";
 import cookies from "js-cookie";
 import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
 type IForm = {
   name: string;
 };
 
 export default function Page() {
+  const schema = z.object({
+    name: z.string().min(1, "O campo precisa ter no mínimo 1 caracter!"),
+  });
   const methods = useForm<IForm>({
-    mode: "onChange",
+    resolver: zodResolver(schema),
   });
 
   const submit = async (data: IForm) => {
@@ -40,13 +45,17 @@ export default function Page() {
                   onSubmit={methods.handleSubmit(submit)}
                   className="flex  w-full space-y-4  flex-col"
                 >
-                  <div className="space-x-4 w-full">
+                  <div className="h-14 flex flex-col w-full">
                     <InputForm
                       className="w-full"
                       placeholder="Digite o nome do equipamento"
                       name="name"
                       type="text"
                     />
+                    <span className="text-sm">
+                      {methods.formState.errors.name &&
+                        methods.formState.errors.name.message}
+                    </span>
                   </div>
 
                   <Button intent="primary" type="submit">

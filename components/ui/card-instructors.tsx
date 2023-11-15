@@ -13,8 +13,8 @@ export function CardInstructors({
 }) {
   const handleDelete = async (id: string) => {
     const at = cookies.get("at");
-    await fetch(env.api + `/user/${id}`, {
-      method: "DELETE",
+    await fetch(env.api + `/user/toUser/${id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${at}`,

@@ -1,8 +1,9 @@
 import { Machine } from "@/models/machine";
 import { User } from "@/models/user";
 import { env } from "@/utils/env";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 import cookies from "js-cookie";
+import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
 export function CardMachines({
@@ -42,7 +43,13 @@ export function CardMachines({
           {data.name}
         </h1>
       </div>
-      <div className=" flex items-center h-full    text-center ">
+      <div className=" flex items-center h-full  gap-2  text-center ">
+        <Link
+          href={`/app/machines/edit/${data.id}?name=${data.name}`}
+          className=" flex justify-center items-center w-fit p-1 hover:bg-opacity-80  rounded-md "
+        >
+          <Pencil2Icon color="#EB1D63" className=" w-5 h-5" />
+        </Link>
         <button
           onClick={(e) => {
             e.preventDefault();
