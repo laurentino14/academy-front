@@ -52,7 +52,7 @@ export default function Page() {
                   <div className="space-x-4 w-full">
                     <InputForm
                       className="w-full"
-                      placeholder="Hash"
+                      placeholder="Digite o código do usuario"
                       name="hash"
                       type="text"
                     />

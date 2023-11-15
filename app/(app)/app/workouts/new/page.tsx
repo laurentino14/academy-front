@@ -126,7 +126,7 @@ export default function Page() {
                 className="w-full"
                 type="number"
                 name="userId"
-                placeholder="Hash do usuário"
+                placeholder="Digite o código do usuário"
               />
               <div className="space-x-4  w-full">
                 <InputForm
