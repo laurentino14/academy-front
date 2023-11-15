@@ -7,7 +7,7 @@ import { env } from "@/utils/env";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 
 const days = [
   "SUNDAY",
@@ -39,79 +39,86 @@ export default function Page() {
   }
   useEffect(
     () => {
-      if (user && user.role === "USER") t();
+      if (user && user.role === "USER" && sets === undefined) t();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [user]
   );
 
-  useEffect(() => {
-    console.log(sets);
-  }, [sets]);
-
-  const [date, setDate] = useState(
-    new Date()
-      .toLocaleString("pt-BR", {
-        dateStyle: "full",
-        timeStyle: "medium",
-      })[0]
-      .toUpperCase() +
+  function Hour() {
+    const [date, setDate] = useState(
       new Date()
         .toLocaleString("pt-BR", {
           dateStyle: "full",
           timeStyle: "medium",
-        })
-        .slice(1)
-  );
-
-  setInterval(
-    () =>
-      setDate(
+        })[0]
+        .toUpperCase() +
         new Date()
           .toLocaleString("pt-BR", {
             dateStyle: "full",
             timeStyle: "medium",
-          })[0]
-          .toUpperCase() +
+          })
+          .slice(1)
+    );
+
+    useEffect(() => {
+      setTimeout(() => {
+        setDate(
           new Date()
             .toLocaleString("pt-BR", {
               dateStyle: "full",
               timeStyle: "medium",
-            })
-            .slice(1)
-      ),
-    1000
-  );
+            })[0]
+            .toUpperCase() +
+            new Date()
+              .toLocaleString("pt-BR", {
+                dateStyle: "full",
+                timeStyle: "medium",
+              })
+              .slice(1)
+        );
+      }, 1000);
+    }, [date]);
+    return <>{date}</>;
+  }
+
+  const DT = memo(Hour);
 
   return (
     <div className="w-full flex-col flex space-y-10 min-h-full py-20 px-10 justify-center">
       {user && user.role === "USER" && (
+        <h1 className="w-full  font-medium text-2xl">
+          <DT />
+        </h1>
+      )}
+      {user && user.role === "USER" && (
         <>
-          {/*  */}
-          <h1 className="w-full  font-medium text-2xl">{date}</h1>
-
           <AnimatePresence mode="wait" presenceAffectsLayout>
             <motion.div className="flex justify-center sm:justify-between lg:justify-normal items-center flex-wrap gap-5 lg:gap-10 ">
-              {sets &&
-                sets.map((set, i) => {
-                  console.log(sets);
-                  const find = user.history.find(
-                    (h) =>
-                      h.setId === set.id &&
-                      new Date(h.createdAt).toDateString() ===
-                        new Date(set.createdAt).toDateString()
+              {sets?.map((set, i) => {
+                const find = user.history.find(
+                  (h) =>
+                    h.setId === set.id &&
+                    new Date(h.createdAt).toDateString() ===
+                      new Date(set.createdAt).toDateString()
+                );
+
+                if (find) {
+                  return (
+                    <CardSet
+                      history={find}
+                      finished
+                      key={Math.random() * 1000}
+                      set={set}
+                    />
                   );
+                }
 
-                  if (find) {
-                    return (
-                      <CardSet history={find} finished key={i} set={set} />
-                    );
-                  }
-
-                  if (set.day === days[new Date().getDay()]) {
-                    return <CardSet key={i} set={set} />;
-                  }
-                })}
+                if (set.day === days[new Date().getDay()]) {
+                  return <CardSet key={Math.random() * 1000} set={set} />;
+                }
+                return <></>;
+              })}
             </motion.div>
           </AnimatePresence>
         </>
