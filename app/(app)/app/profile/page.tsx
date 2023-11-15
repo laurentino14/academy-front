@@ -3,53 +3,32 @@ import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { AuthContext } from "@/contexts/auth";
 import { env } from "@/utils/env";
-import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { z } from "zod";
+type IForm = {
+  id: string;
+  name?: string;
+  email?: string;
+  password: string;
+};
 
-const schema = z.object({
-  id: z.string(),
-  name: z.string().min(1, "Nome inválido!").optional(),
-  email: z.string().email("E-mail inválido!").optional(),
-  weigth: z.string().optional(),
-  height: z.string().optional(),
-  password: z.string().min(3, "A senha precisa ter no mínimo 3 caracteres!"),
-});
-
-type IForm = z.infer<typeof schema>;
-
-const schemaPassword = z
-  .object({
-    id: z.string(),
-    oldPassword: z
-      .string()
-      .min(3, "A senha precisa ter no mínimo 3 caracteres!"),
-    password: z.string().min(3, "A senha precisa ter no mínimo 3 caracteres!"),
-    passwordConfirmation: z
-      .string()
-      .min(3, "A senha precisa ter no mínimo 3 caracteres!"),
-  })
-  .refine((data) => data.password === data.passwordConfirmation, {
-    message: "As senhas precisam ser iguais!",
-    path: ["passwordConfirmation"],
-  });
-
-type IFormPassword = z.infer<typeof schemaPassword>;
+type IFormPassword = {
+  id: string;
+  oldPassword: string;
+  password: string;
+  passwordConfirmation: string;
+};
 export default function Page() {
   const { user, setUser } = useContext(AuthContext);
   const methods = useForm<IForm>({
-    resolver: zodResolver(schema),
+    mode: "onChange",
     defaultValues: {
       id: user?.id,
       name: user?.name,
       email: user?.email,
-      weigth: user?.weigth?.toFixed(1),
-      height: user?.height?.toFixed(2),
     },
   });
 
@@ -59,8 +38,6 @@ export default function Page() {
       name: data.name !== "" ? data.name : undefined,
       email: data.email !== "" ? data.email : undefined,
       password: data.password,
-      weigth: Number(data.weigth).toFixed(2),
-      height: Number(data.height).toFixed(2),
     };
     const cookie = cookies.get("at");
     await fetch(env.api + "/user", {
@@ -82,7 +59,7 @@ export default function Page() {
       });
   };
   const methodsPassword = useForm<IFormPassword>({
-    resolver: zodResolver(schemaPassword),
+    mode: "onChange",
     defaultValues: {
       id: user?.id,
     },
@@ -95,35 +72,31 @@ export default function Page() {
   }, [user, methodsPassword]);
 
   async function submitPassword(data: IFormPassword) {
-    const at = cookies.get;
     await fetch(env.api + "/user/password", {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
         "access-control-allow-origin": "*",
-        authorization: `Bearer ${at}`,
+        authorization: `Bearer ${cookies.get("at")}`,
       },
     })
       .then((res) => res.json())
-      .then((res) => {
-        if (res.statusCode !== 200) {
-          return toast.error("Erro ao atualizar a senha!");
-        }
+      .then(() =>
         methodsPassword.reset({
           id: user?.id,
           oldPassword: "",
           password: "",
           passwordConfirmation: "",
-        });
-      })
-      .catch((err) => toast.error("Erro ao atualizar a senha!"));
+        })
+      )
+      .catch((err) => console.log(err));
   }
   const [active, setActive] = useState(1);
 
   return (
     <div className="min-h-screen px-4 w-full flex items-center justify-center">
-      <div className="max-w-md w-full flex items-center flex-col border border-black/20 shadow drop-shadow-md  bg-dark rounded-md py-4 px-5 ">
+      <div className="max-w-md w-full flex items-center flex-col bg-dark rounded-md py-4 px-5 ">
         <div className="w-full flex flex-nowrap">
           <Button
             onClick={() => setActive(1)}
@@ -160,67 +133,26 @@ export default function Page() {
                 onSubmit={methods.handleSubmit(submit)}
                 className="flex  w-full space-y-4 mt-10 flex-col"
               >
-                <div className="space-x-4 h-14 flex flex-col w-full">
+                <div className="space-x-4 w-full">
                   <InputForm
                     className="w-full"
                     placeholder={user?.name}
                     name="name"
                     type="text"
                   />
-                  <span className="text-sm">
-                    {methods.formState.errors.name &&
-                      methods.formState.errors.name.message}
-                  </span>
                 </div>
-                <div className="w-full flex-col h-14 flex">
-                  <InputForm
-                    className="w-full"
-                    placeholder={user?.email}
-                    name="email"
-                    type="email"
-                  />
-                  <span className="text-sm">
-                    {methods.formState.errors.email &&
-                      methods.formState.errors.email.message}
-                  </span>
-                </div>
-                <div className="flex w-full gap-4 justify-between">
-                  <div className="h-14 flex flex-col w-1/2">
-                    <InputForm
-                      className="w-full"
-                      placeholder={user?.weigth?.toFixed(1) || "Peso"}
-                      name="weigth"
-                      type="text"
-                    />
-                    <span className="text-sm">
-                      {methods.formState.errors.weigth &&
-                        methods.formState.errors.weigth.message}
-                    </span>
-                  </div>
-                  <div className="h-14 flex flex-col w-1/2">
-                    <InputForm
-                      className="w-full"
-                      placeholder={user?.height?.toFixed(2) || "Altura"}
-                      name="height"
-                      type="text"
-                    />
-                    <span className="text-sm">
-                      {methods.formState.errors.height &&
-                        methods.formState.errors.height.message}
-                    </span>
-                  </div>
-                </div>
-                <div className="space-x-4 h-14 w-full flex flex-col ">
+                <InputForm
+                  placeholder={user?.email}
+                  name="email"
+                  type="email"
+                />
+                <div className="space-x-4 flex flex-row flex-nowrap">
                   <InputForm
                     className="w-full"
                     name="password"
                     placeholder="Senha"
                     type="password"
                   />
-                  <span className="text-sm">
-                    {methods.formState.errors.password &&
-                      methods.formState.errors.password.message}
-                  </span>
                 </div>
 
                 <Button intent="primary" type="submit">
@@ -239,42 +171,29 @@ export default function Page() {
                 onSubmit={methodsPassword.handleSubmit(submitPassword)}
                 className="flex w-full space-y-4 mt-10 flex-col"
               >
-                <div className=" flex flex-col h-14 w-full">
+                <div className="space-x-4 flex flex-row flex-nowrap">
                   <InputForm
                     className="w-full"
                     name="oldPassword"
                     placeholder="Senha atual"
                     type="password"
                   />
-                  <span className="text-sm">
-                    {methodsPassword.formState.errors.oldPassword &&
-                      methodsPassword.formState.errors.oldPassword.message}
-                  </span>
                 </div>
-                <div className=" flex flex-col h-14 w-full">
+                <div className="space-x-4 flex flex-row flex-nowrap">
                   <InputForm
                     className="w-full"
                     name="password"
                     placeholder="Nova senha"
                     type="password"
                   />
-                  <span className="text-sm">
-                    {methodsPassword.formState.errors.password &&
-                      methodsPassword.formState.errors.password.message}
-                  </span>
                 </div>
-                <div className="flex flex-col h-14 w-full">
+                <div className="space-x-4 flex flex-row flex-nowrap">
                   <InputForm
                     className="w-full"
                     name="passwordConfirmation"
                     placeholder="Confirme a nova senha"
                     type="password"
                   />
-                  <span className="text-sm">
-                    {methodsPassword.formState.errors.passwordConfirmation &&
-                      methodsPassword.formState.errors.passwordConfirmation
-                        .message}
-                  </span>
                 </div>
 
                 <Button intent="primary" type="submit">

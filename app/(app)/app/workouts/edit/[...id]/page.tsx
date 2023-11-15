@@ -29,7 +29,6 @@ export default function Page() {
 
   const { user } = useContext(AuthContext);
   const methods = useForm<IForm>({
-    mode: "onChange",
     defaultValues: async () => {
       const at = cookies.get("at");
       const payload = await fetch(env.api + `/workout/${params.id}`, {
@@ -58,7 +57,6 @@ export default function Page() {
   const submit = async (data: IForm) => {
     const sets = [...data.sets, ...deleteds];
 
-    console.log(sets, "sets");
     const payload = {
       id: data.id,
 

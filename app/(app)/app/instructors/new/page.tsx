@@ -40,7 +40,7 @@ export default function Page() {
         if (res.statusCode !== 200) {
           return toast.error("Código do usuário não existe!");
         } else {
-          toast.success("Instrutor cadastrado!");
+          toast.success("Instrutor cadastrado com sucesso!");
         }
 
         methods.reset({ hash: undefined });
