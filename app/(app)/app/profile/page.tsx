@@ -77,7 +77,6 @@ export default function Page() {
         if (res.statusCode !== 200) {
           return toast.error("Dados invalidos!");
         }
-
         setUser(res.data);
         methods.reset({ id: user?.id, password: "" });
       });

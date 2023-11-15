@@ -12,6 +12,7 @@ import cookies from "js-cookie";
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type IForm = {
   id: string;
@@ -86,10 +87,14 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() => methods.reset({}))
-      .finally(() => {
+      .then((res) => {
+        if(res.statusCode !== 200){
+         return toast.error("Erro ao atualizar o treino!")
+        }
+        toast.success("Treino atualizado com sucesso!")
+        methods.reset({})
         router.push("/app/workouts");
-      });
+      })
   };
 
   const { append, fields, remove } = useFieldArray({
