@@ -155,94 +155,106 @@ export default function Page() {
                     </div>
                     <div className="space-y-5">
                       <div className="w-full flex gap-4 justify-between">
-                        <select
-                          className="w-1/2 text-center h-8 appearance-none px-4 rounded-md bg-primary"
-                          defaultValue={"MONDAY"}
-                          {...methods.register(`sets.${i}.day`)}
-                        >
-                          <option
-                            className="text-center hover:text-center"
-                            value="SUNDAY"
+                        <div className="w-1/2 flex flex-col">
+                          <label className="w-full text-sm">Dia</label>
+                          <select
+                            className="w-full text-center h-8 appearance-none px-4 rounded-md bg-primary"
+                            defaultValue={"MONDAY"}
+                            {...methods.register(`sets.${i}.day`)}
                           >
-                            Domingo
-                          </option>
-                          <option className="text-center" value="MONDAY">
-                            Segunda
-                          </option>
-                          <option className="text-center" value="TUESDAY">
-                            Terça
-                          </option>
-                          <option className="text-center" value="WEDNESDAY">
-                            Quarta
-                          </option>
-                          <option className="text-center" value="THURSDAY">
-                            Quinta
-                          </option>
-                          <option className="text-center" value="FRIDAY">
-                            Sexta
-                          </option>
-                          <option className="text-center" value="SATURDAY">
-                            Sábado
-                          </option>
-                        </select>
-                        <select
-                          className="w-1/2 text-center h-8 appearance-none px-4 rounded-md bg-primary"
-                          defaultValue={"CHEST"}
-                          {...methods.register(`sets.${i}.type`)}
-                        >
-                          <option className="text-center" value="CHEST">
-                            Peito
-                          </option>
-                          <option className="text-center" value="BACK">
-                            Costa
-                          </option>
-                          <option className="text-center" value="LEGS">
-                            Perna
-                          </option>
-                          <option className="text-center" value="SHOULDERS">
-                            Ombro
-                          </option>
-                          <option className="text-center" value="ARMS">
-                            Braço
-                          </option>
-                          <option className="text-center" value="ABS">
-                            Abdômen
-                          </option>
-                        </select>
+                            <option
+                              className="text-center hover:text-center"
+                              value="SUNDAY"
+                            >
+                              Domingo
+                            </option>
+                            <option className="text-center" value="MONDAY">
+                              Segunda
+                            </option>
+                            <option className="text-center" value="TUESDAY">
+                              Terça
+                            </option>
+                            <option className="text-center" value="WEDNESDAY">
+                              Quarta
+                            </option>
+                            <option className="text-center" value="THURSDAY">
+                              Quinta
+                            </option>
+                            <option className="text-center" value="FRIDAY">
+                              Sexta
+                            </option>
+                            <option className="text-center" value="SATURDAY">
+                              Sábado
+                            </option>
+                          </select>
+                        </div>
+                        <div className="w-1/2 flex flex-col">
+                          <label className="w-full text-sm">Tipo</label>
+                          <select
+                            className="w-full text-center h-8 appearance-none px-4 rounded-md bg-primary"
+                            defaultValue={"CHEST"}
+                            {...methods.register(`sets.${i}.type`)}
+                          >
+                            <option className="text-center" value="CHEST">
+                              Peito
+                            </option>
+                            <option className="text-center" value="BACK">
+                              Costa
+                            </option>
+                            <option className="text-center" value="LEGS">
+                              Perna
+                            </option>
+                            <option className="text-center" value="SHOULDERS">
+                              Ombro
+                            </option>
+                            <option className="text-center" value="ARMS">
+                              Braço
+                            </option>
+                            <option className="text-center" value="ABS">
+                              Abdômen
+                            </option>
+                          </select>
+                        </div>
                       </div>
                       <div className="w-full flex gap-4 justify-between">
-                        <select
-                          className="w-1/2 text-center h-8 appearance-none px-4 rounded-md bg-primary"
-                          placeholder="Exercício"
-                          {...methods.register(`sets.${i}.exerciseId`)}
-                        >
-                          {exercises &&
-                            exercises?.map((exercise, i) => {
-                              return (
-                                <option
-                                  key={i}
-                                  className="text-center"
-                                  value={exercise.id}
-                                >
-                                  {exercise.name}
-                                </option>
-                              );
-                            })}
-                        </select>
-                        <select
-                          className=" text-center w-1/2 h-8 appearance-none px-4 rounded-md bg-primary"
-                          defaultValue={"id1"}
-                          {...methods.register(`sets.${i}.machineId`)}
-                        >
-                          {machines &&
-                            machines.map((machine, i) => {
-                              return (
-                                <option key={i} value={machine.id}>
-                                  {machine.name}
-                                </option>
-                              );
-                            })}
-                        </select>
+                        <div className="w-1/2 flex flex-col">
+                          <label className="w-full text-sm">Exercício</label>
+                          <select
+                            className="w-full text-center h-8 appearance-none px-4 rounded-md bg-primary"
+                            placeholder="Exercício"
+                            {...methods.register(`sets.${i}.exerciseId`)}
+                          >
+                            {exercises &&
+                              exercises?.map((exercise, i) => {
+                                return (
+                                  <option
+                                    key={i}
+                                    className="text-center"
+                                    value={exercise.id}
+                                  >
+                                    {exercise.name}
+                                  </option>
+                                );
+                              })}
+                          </select>
+                        </div>
+                        <div className="w-1/2 flex flex-col">
+                          <label className="w-full text-sm">Equipamento</label>
+                          <select
+                            className=" text-center w-full h-8 appearance-none px-4 rounded-md bg-primary"
+                            defaultValue={"id1"}
+                            {...methods.register(`sets.${i}.machineId`)}
+                          >
+                            {machines &&
+                              machines.map((machine, i) => {
+                                return (
+                                  <option key={i} value={machine.id}>
+                                    {machine.name}
+                                  </option>
+                                );
+                              })}
+                          </select>
+                        </div>
                       </div>
                     </div>
                     <div className="flex text-sm -mb-7 justify-between">

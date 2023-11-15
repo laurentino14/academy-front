@@ -125,7 +125,7 @@ export function CardSet({
               </p>
               {set.weight && (
                 <p className="text-gray-400 text-sm">
-                  ${set.weight.toFixed(1)}kg
+                  {set.weight.toFixed(1)}kg
                 </p>
               )}
             </motion.div>

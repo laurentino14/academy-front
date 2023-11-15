@@ -9,6 +9,8 @@ export type User = {
   hash: number;
   doc: string;
   gender: string;
+  weigth?: number;
+  height?: number;
   name: string;
   email: string;
   history: History[];

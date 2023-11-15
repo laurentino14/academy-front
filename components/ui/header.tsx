@@ -76,6 +76,14 @@ export const Header = () => {
                 Meus treinos
               </Button>
             </Link>
+            <Link passHref href="/app/history">
+              <Button
+                onClick={(e) => setOpen(!open)}
+                className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
+              >
+                Histórico
+              </Button>
+            </Link>
           </>
         )}
 

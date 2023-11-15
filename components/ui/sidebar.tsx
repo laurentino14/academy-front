@@ -27,6 +27,11 @@ export function Sidebar() {
                   Meus treinos
                 </Button>
               </Link>
+              <Link passHref href="/app/history">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Histórico
+                </Button>
+              </Link>
             </div>
           )}
           {user?.role === "ADMIN" && (

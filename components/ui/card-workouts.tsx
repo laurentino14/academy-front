@@ -257,6 +257,12 @@ export function WorkoutCard({
               <span className="text-xs leading-[4px]">
                 {set.series}x{set.reps}
               </span>
+              {set.weight && (
+                <>
+                  <span className="text-xs leading-[4px]">/</span>
+                  <span className="text-xs leading-[4px]">{set.weight}kg</span>
+                </>
+              )}
             </div>
           </div>
         </div>

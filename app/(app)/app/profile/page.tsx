@@ -12,6 +12,8 @@ type IForm = {
   id: string;
   name?: string;
   email?: string;
+  weigth?: number | string;
+  height?: number | string;
   password: string;
 };
 
@@ -29,6 +31,8 @@ export default function Page() {
       id: user?.id,
       name: user?.name,
       email: user?.email,
+      weigth: user?.weigth?.toFixed(1),
+      height: user?.height?.toFixed(2),
     },
   });
 
@@ -38,6 +42,8 @@ export default function Page() {
       name: data.name !== "" ? data.name : undefined,
       email: data.email !== "" ? data.email : undefined,
       password: data.password,
+      weigth: Number(data.weigth).toFixed(2),
+      height: Number(data.height).toFixed(2),
     };
     const cookie = cookies.get("at");
     await fetch(env.api + "/user", {
@@ -141,6 +147,20 @@ export default function Page() {
                   name="email"
                   type="email"
                 />
+                <div className="flex w-full gap-4 justify-between">
+                  <InputForm
+                    className="w-1/2"
+                    placeholder={user?.weigth?.toFixed(1) || "Peso"}
+                    name="weigth"
+                    type="text"
+                  />
+                  <InputForm
+                    className="w-1/2"
+                    placeholder={user?.height?.toFixed(2) || "Altura"}
+                    name="height"
+                    type="text"
+                  />
+                </div>
                 <div className="space-x-4 flex flex-row flex-nowrap">
                   <InputForm
                     className="w-full"
