@@ -46,6 +46,16 @@ export function Sidebar() {
                   Promover instrutor
                 </Button>
               </Link>
+              <Link passHref href="/app/users">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Todos os usuários
+                </Button>
+              </Link>
+              <Link passHref href="/app/admin/new">
+                <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                  Promover administrador
+                </Button>
+              </Link>
               <Link passHref href="/app/machines">
                 <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
                   Equipamentos
