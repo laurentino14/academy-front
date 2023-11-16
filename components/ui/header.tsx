@@ -126,12 +126,20 @@ export const Header = () => {
         )}
         {user?.role === "ADMIN" && (
           <div className="flex    flex-col space-y-4">
+            <Link passHref href="/app/users">
+              <Button
+                onClick={(e) => setOpen(!open)}
+                className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
+              >
+                Todos os usuários
+              </Button>
+            </Link>
             <Link passHref href="/app/instructors">
               <Button
                 onClick={(e) => setOpen(!open)}
                 className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
               >
-                Instrutores
+                Todos os instrutores
               </Button>
             </Link>
             <Link passHref href="/app/instructors/new">
@@ -142,12 +150,9 @@ export const Header = () => {
                 Promover instrutor
               </Button>
             </Link>
-            <Link passHref href="/app/users">
-              <Button
-                onClick={(e) => setOpen(!open)}
-                className="w-full !bg-gray1 text-white hover:bg-opacity-80 "
-              >
-                Todos os usuários
+            <Link passHref href="/app/admin">
+              <Button className="w-full !bg-gray1 text-white hover:bg-opacity-80 ">
+                Todos os administradores
               </Button>
             </Link>
             <Link passHref href="/app/admin/new">
