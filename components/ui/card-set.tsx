@@ -8,6 +8,7 @@ import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Button } from "./button";
 import { SVGStar } from "./svg-star";
 export function CardSet({
@@ -32,8 +33,11 @@ export function CardSet({
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.statusCode === 201) {
+        if (res.statusCode !== 200) {
+          return toast.error("Erro ao finalizar exercício!");
         }
+
+        setMFinished(true);
       });
   };
 

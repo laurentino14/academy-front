@@ -86,6 +86,9 @@ export default function Page() {
     return <>{date}</>;
   }
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   const DT = memo(Hour);
 
   return (
@@ -106,7 +109,8 @@ export default function Page() {
                     new Date(h.createdAt).toDateString() ===
                       new Date(set.createdAt).toDateString()
                 );
-
+                console.log(set.id, "find");
+                console.log(new Date(set.createdAt).toDateString());
                 if (find) {
                   return (
                     <CardSet
