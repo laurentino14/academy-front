@@ -92,7 +92,9 @@ export default function Page() {
         },
       });
       const data = await res.json();
-      setExercises(data.data);
+      setExercises(
+        data.data.filter((exercise: Exercise) => !exercise.deletedAt)
+      );
     }
     exercise();
 
@@ -107,7 +109,7 @@ export default function Page() {
       });
       const data = await res.json();
 
-      setMachines(data.data);
+      setMachines(data.data.filter((machine: Machine) => !machine.deletedAt));
     }
     machine();
   }, []);
