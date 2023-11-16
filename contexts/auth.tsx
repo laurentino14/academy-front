@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .then((res) => res.json())
         .then((res) => {
           if (res.statusCode === 400 || res.statusCode === 500) {
-            return toast.error("E-mail ou senha incorreto!")
+            return toast.error("E-mail ou senha incorreto!");
           }
           setUser(res.data.user);
           cookies.set("rt", res.data.refreshToken, {
@@ -57,10 +57,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           });
           cookies.set("at", res.data.accessToken, { expires: 60 * 60 });
           router.push("/app");
-        })
-      } catch (err) {
-        toast.error("Erro ao fazer login!");
-      } 
+        });
+    } catch (err) {
+      toast.error("Erro ao fazer login!");
+    }
   }
 
   async function refreshToken() {
@@ -69,7 +69,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (!rt || !at) router.push("/");
 
-    try {
       await fetch(env.api + "/auth", {
         method: "GET",
         headers: {
@@ -86,9 +85,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           cookies.set("at", res.data.accessToken, { expires: 60 * 60 });
           setUser(res.data.user);
         });
-    } catch (err) {
-      toast.error("Token Atualizado");
-    }
   }
 
   async function signOut() {
@@ -115,8 +111,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             cookies.remove("at");
             throw new Error("Dados já cadastrados");
           }
-          console.log(res.statusCode);
-          console.log(res.data);
           setUser(res.data.user);
 
           cookies.set("rt", res.data.refreshToken, {

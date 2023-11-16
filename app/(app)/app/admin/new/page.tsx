@@ -8,7 +8,11 @@ import { AnimatePresence } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
+type IForm = {
+  hash: string;
+};
 
 export default function Page() {
   const { user, setUser } = useContext(AuthContext);
@@ -22,7 +26,7 @@ export default function Page() {
 
   const submit = async (data: IForm) => {
     const cookie = cookies.get("at");
-    await fetch(env.api + `/user/toInstructor/${data.hash}`, {
+    await fetch(env.api + `/user/toAdmin/${data.hash}`, {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {
@@ -32,7 +36,15 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() => methods.reset({ hash: undefined }));
+      .then((res) => {
+        if (res.statusCode !== 200) {
+          return toast.error("Código do usuário não existe!");
+        } else {
+          toast.success("Administrador cadastrado com sucesso!");
+        }
+
+        methods.reset({ hash: undefined });
+      });
   };
 
   return (
@@ -49,7 +61,7 @@ export default function Page() {
                   <div className="flex flex-col h-14 w-full">
                     <InputForm
                       className="w-full"
-                      placeholder="Digite o código do usuario"
+                      placeholder="Digite o código do usuário"
                       name="hash"
                       type="number"
                     />
@@ -60,7 +72,7 @@ export default function Page() {
                   </div>
 
                   <Button intent="primary" type="submit">
-                    Tornar instrutor
+                    Tornar administrador
                   </Button>
                 </form>
               </FormProvider>

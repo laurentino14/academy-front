@@ -28,6 +28,7 @@ import {
 } from "@tanstack/react-table";
 import cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const { user, refreshToken } = useContext(AuthContext);
@@ -64,7 +65,6 @@ export default function Page() {
       header: "Exercício",
       cell: ({ row }) => {
         const find = user?.sets.find((set) => set.id === row.original.setId);
-        console.log(find);
         if (find) {
           return <div className="capitalize">{find?.exercise?.name}</div>;
         }
@@ -129,9 +129,10 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.statusCode === 400 || res.statusCode === 500) {
-          throw new Error("Erro ao deletar o histórico");
+        if (res.statusCode !== 200) {
+          return toast.error("Erro ao deletar a avaliação!");
         }
+        toast.success("Avaliação deletada com sucesso!");
         reloadData();
       });
   };

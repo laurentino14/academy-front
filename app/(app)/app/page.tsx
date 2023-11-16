@@ -34,7 +34,6 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res, "res");
         setSets(
           res.data.filter(
             (set: SetModel) => !set.deletedAt && set.workout?.active === true
@@ -87,6 +86,9 @@ export default function Page() {
     return <>{date}</>;
   }
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   const DT = memo(Hour);
 
   return (
@@ -107,7 +109,8 @@ export default function Page() {
                     new Date(h.createdAt).toDateString() ===
                       new Date(set.createdAt).toDateString()
                 );
-
+                console.log(set.id, "find");
+                console.log(new Date(set.createdAt).toDateString());
                 if (find) {
                   return (
                     <CardSet
@@ -133,7 +136,7 @@ export default function Page() {
         <>
           {/* INSTRUCTOR */}
 
-          <div className="flex flex-col justify-center items-center ">
+          <div className="min-h-screen pb-36 flex flex-col justify-center items-center ">
             <Image
               className=""
               src="/assets/logoAdmInst.png"

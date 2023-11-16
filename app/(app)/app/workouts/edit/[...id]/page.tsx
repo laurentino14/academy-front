@@ -86,13 +86,13 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if(res.statusCode !== 200){
-         return toast.error("Erro ao atualizar o treino!")
+        if (res.statusCode !== 200) {
+          return toast.error("Erro ao atualizar o treino!");
         }
-        toast.success("Treino atualizado com sucesso!")
-        methods.reset({})
+        toast.success("Treino atualizado com sucesso!");
+        methods.reset({});
         router.push("/app/workouts");
-      })
+      });
   };
 
   const { append, fields, remove } = useFieldArray({
@@ -112,7 +112,9 @@ export default function Page() {
         },
       });
       const data = await res.json();
-      setExercises(data.data);
+      setExercises(
+        data.data.filter((exercise: Exercise) => !exercise.deletedAt)
+      );
     }
     exercise();
 
@@ -127,7 +129,7 @@ export default function Page() {
       });
       const data = await res.json();
 
-      setMachines(data.data);
+      setMachines(data.data.filter((machine: Machine) => !machine.deletedAt));
     }
     machine();
   }, []);
@@ -139,15 +141,9 @@ export default function Page() {
       deletedAt: "deleted",
     };
 
-    console.log(payload, "teste remove ");
-
     setDeleteds((prev) => [...prev, payload]);
     remove(i);
   }
-
-  useEffect(() => {
-    console.log(deleteds, "deleteds");
-  }, [deleteds]);
 
   return (
     <div className="min-h-screen w-full py-20 px-4 flex items-center justify-center">

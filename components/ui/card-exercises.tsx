@@ -39,10 +39,10 @@ export function CardExercise({
   return (
     <div className="w-32 h-24 flex flex-col gap-1  rounded-md p-2 bg-dark">
       <div className="flex flex-col space-y-1 ">
-        <h1 className="w-full  font-medium rounded-md text-white text-center">
+        <h1 className="w-full  font-medium rounded-md truncate text-white text-center">
           {data.name}
         </h1>
-        <p className="w-full h-6 font-light text-sm  text-white/50 text-center  ">
+        <p className="w-full h-6 font-light text-sm truncate  text-white/50 text-center  ">
           {data.description}
         </p>
       </div>

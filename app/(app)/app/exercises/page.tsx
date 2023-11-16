@@ -28,10 +28,6 @@ export default function Page() {
 
   const [filter, setFilter] = useState<string>("");
 
-  useEffect(() => {
-    console.log(exercise);
-  }, [exercise]);
-
   return (
     <div className="w-full min-h-screen  flex flex-col justify-center items-center space-y-4  px-4 py-20 ">
       <div className="w-full flex items-center justify-center ">
@@ -53,7 +49,7 @@ export default function Page() {
             if (e.name.includes(filter)) {
               return (
                 <CardExercise key={i} data={e} setExercise={setExercise} />
-              )
+              );
             }
           })}
 

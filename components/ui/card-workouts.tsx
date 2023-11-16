@@ -2,7 +2,12 @@ import { AuthContext } from "@/contexts/auth";
 import { SetModel } from "@/models/set";
 import { Workout } from "@/models/workout";
 import { env } from "@/utils/env";
-import { ActivityLogIcon, CheckIcon, ChevronDownIcon, HomeIcon, Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import {
+  ChevronDownIcon,
+  HomeIcon,
+  Pencil2Icon,
+  TrashIcon,
+} from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import cookies from "js-cookie";
@@ -19,7 +24,7 @@ export function WorkoutCard({
   z: () => Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
-  const { user, refreshToken} = useContext(AuthContext);
+  const { user, refreshToken } = useContext(AuthContext);
 
   const handleRemove = async (id: string) => {
     const at = cookies.get("at");
@@ -37,36 +42,42 @@ export function WorkoutCard({
   };
 
   const handleActiveWorkout = async () => {
-
     const at = cookies.get("at");
     await fetch(env.api + `/workout/active`, {
       method: "POST",
       body: JSON.stringify({ userId: workout.userId, workoutId: workout.id }),
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${at}`,
-      }
-    })
-    .then((res) => refreshToken())
-}   
+      },
+    }).then((res) => refreshToken());
+  };
 
-  
   return (
     <motion.div
-    initial={false}
-    animate={{
-      height: open ? "auto" : "4rem",
-    }}
-    className="w-full border border-black/20 shadow drop-shadow-md  overflow-hidden bg-dark/70 rounded-md "
+      initial={false}
+      animate={{
+        height: open ? "auto" : "4rem",
+      }}
+      className="w-full border border-black/20 shadow drop-shadow-md  overflow-hidden bg-dark/70 rounded-md "
     >
       <div className="w-full flex px-4 bg-dark items-center justify-between h-[4rem]">
         <div className="flex items-center gap-5">
-         {workout.active === false ?
-         <button onClick={(e) => {
-            e.preventDefault(),
-            handleActiveWorkout()
-           }}>
-            <HomeIcon/></button> : <HomeIcon color="#EB1D63"/>}
+          {workout.active === false ? (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                if (user?.role !== "USER") {
+                  return;
+                }
+                handleActiveWorkout();
+              }}
+            >
+              <HomeIcon />
+            </button>
+          ) : (
+            <HomeIcon color="#EB1D63" />
+          )}
           <Link href={`/app/workouts/edit/${workout.id}`}>
             <Pencil2Icon />
           </Link>
@@ -241,7 +252,6 @@ export function WorkoutCard({
   );
 
   function SetLi({ set }: { set: SetModel }) {
-    console.log(set);
     return (
       <li className="flex max-w-[10rem] w-full rounded-md   bg-white/10 px-4 items-center  justify-between text-sm">
         <div className="flex items-center flex-col justify-between w-full  py-1 gap-2">
