@@ -166,9 +166,59 @@ export default function Page() {
     },
   });
 
+  useEffect(() => {
+    console.log(rowSelection);
+    console.log(table.getSelectedRowModel());
+  }, [rowSelection, table]);
+
+  async function handleExcludeAllSelected() {
+    const at = cookies.get("at");
+    const ids = await table
+      .getSelectedRowModel()
+      .rows.map((row) => row.original.id);
+    let errors = 0;
+    let success = 0;
+    for (let id of ids) {
+      await fetch(env.api + "/history/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "access-control-allow-origin": "*",
+          authorization: `Bearer ${at}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.statusCode !== 200) {
+            return errors++;
+          }
+          success++;
+        });
+    }
+    if (errors > 0) {
+      toast.error(`${errors} Erro ao deletar as avaliações!`);
+    }
+
+    if (success > 0) {
+      toast.success(`${success} Avaliações deletadas com sucesso!`);
+    }
+    reloadData();
+  }
+
   return (
     <div className="flex flex-col w-full gap-10 py-20 lg:px-20 sm:px-10 px-4">
-      <h1 className="text-2xl ">Histórico</h1>
+      <div className="w-full items-center flex justify-between">
+        <h1 className="text-2xl ">Histórico</h1>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            handleExcludeAllSelected();
+          }}
+          disabled={table.getSelectedRowModel().rows.length === 0}
+        >
+          Excluir selecionados
+        </Button>
+      </div>
       <div className="rounded-md border border-black/20 shadow drop-shadow-lg ">
         <Table className="bg-dark/70 outline-transparent outline-2">
           <TableHeader className="bg-dark">
