@@ -69,7 +69,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (!rt || !at) router.push("/");
 
-    try {
       await fetch(env.api + "/auth", {
         method: "GET",
         headers: {
@@ -86,9 +85,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           cookies.set("at", res.data.accessToken, { expires: 60 * 60 });
           setUser(res.data.user);
         });
-    } catch (err) {
-      toast.error("Token Atualizado");
-    }
   }
 
   async function signOut() {
