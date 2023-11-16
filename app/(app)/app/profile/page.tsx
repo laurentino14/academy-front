@@ -111,8 +111,9 @@ export default function Page() {
       .then((res) => res.json())
       .then((res) => {
         if (res.statusCode !== 200) {
-          return toast.error("Erro ao alterar a senha!");
+          return toast.error("Erro ao alterar a senha");
         }
+          toast.success("Senha alterada com sucesso!");
         methodsPassword.reset({
           id: user?.id,
           oldPassword: "",
@@ -120,7 +121,7 @@ export default function Page() {
           passwordConfirmation: "",
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {console.log(err)});
   }
   const [active, setActive] = useState(1);
 
