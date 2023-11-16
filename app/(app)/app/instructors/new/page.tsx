@@ -8,11 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import cookies from "js-cookie";
 import { useContext } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { z } from "zod";
-type IForm = {
-  hash: string;
-};
 
 export default function Page() {
   const { user, setUser } = useContext(AuthContext);
@@ -36,15 +32,7 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then((res) => {
-        if (res.statusCode !== 200) {
-          return toast.error("Código do usuário não existe!");
-        } else {
-          toast.success("Instrutor cadastrado com sucesso!");
-        }
-
-        methods.reset({ hash: undefined });
-      });
+      .then(() => methods.reset({ hash: undefined }));
   };
 
   return (
