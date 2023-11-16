@@ -83,15 +83,19 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() =>
+      .then((res) => {
+        if (res.statusCode !== 200) {
+          return toast.error("Erro ao atualizar a senha!");
+        }
+        toast.success("Senha atualizada com sucesso!");
+
         methodsPassword.reset({
           id: user?.id,
           oldPassword: "",
           password: "",
           passwordConfirmation: "",
-        })
-      )
-      .catch((err) => console.log(err));
+        });
+      });
   }
   const [active, setActive] = useState(1);
 

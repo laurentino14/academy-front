@@ -24,7 +24,6 @@ export default function Home() {
       password: "",
     },
   });
-  console.log(methods.watch("email"));
   return (
     <main className="flex min-h-screen flex-col items-center justify-center lg:p-24 w-full lg:w-1/2 bg-primary">
       <FormProvider {...methods}>

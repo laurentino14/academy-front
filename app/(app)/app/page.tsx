@@ -34,7 +34,6 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res, "res");
         setSets(
           res.data.filter(
             (set: SetModel) => !set.deletedAt && set.workout?.active === true

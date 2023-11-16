@@ -64,7 +64,6 @@ export default function Page() {
       header: "Exercício",
       cell: ({ row }) => {
         const find = user?.sets.find((set) => set.id === row.original.setId);
-        console.log(find);
         if (find) {
           return <div className="capitalize">{find?.exercise?.name}</div>;
         }
