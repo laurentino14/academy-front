@@ -7,8 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 const schema = z.object({
@@ -40,6 +42,7 @@ const schemaPassword = z
 
 type IFormPassword = z.infer<typeof schemaPassword>;
 export default function Page() {
+  const router = useRouter();
   const { user, setUser } = useContext(AuthContext);
   const methods = useForm<IForm>({
     resolver: zodResolver(schema),
@@ -72,7 +75,14 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then((res) => setUser(res.data))
+      .then((res) => {
+        if (res.statusCode !== 200)
+          return toast.error("Erro ao alterar as informações!");
+
+        toast.success("Informações alteradas com sucesso!");
+        setUser(res.data);
+        router.push("/app");
+      })
       .then(() => methods.reset({ id: user?.id, password: "" }));
   };
   const methodsPassword = useForm<IFormPassword>({
@@ -99,14 +109,17 @@ export default function Page() {
       },
     })
       .then((res) => res.json())
-      .then(() =>
+      .then((res) => {
+        if (res.statusCode !== 200) {
+          return toast.error("Erro ao alterar a senha!");
+        }
         methodsPassword.reset({
           id: user?.id,
           oldPassword: "",
           password: "",
           passwordConfirmation: "",
-        })
-      )
+        });
+      })
       .catch((err) => console.log(err));
   }
   const [active, setActive] = useState(1);
